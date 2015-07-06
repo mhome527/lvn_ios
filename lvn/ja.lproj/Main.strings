@@ -1,0 +1,19 @@
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "2Qm-oe-Swo"; */
+"2Qm-oe-Swo.text" = "Label";
+
+/* Class = "UIViewController"; title = "abc"; ObjectID = "5h1-fw-6cE"; */
+"5h1-fw-6cE.title" = "abc";
+
+/* Class = "UINavigationItem"; title = "Gnuntius"; ObjectID = "S7x-2V-kow"; */
+"S7x-2V-kow.title" = "Gnuntius";
+
+/* Class = "UILabel"; text = "Test"; ObjectID = "V3B-8W-fzr"; */
+"V3B-8W-fzr.text" = "Test";
+
+/* Class = "UIButton"; normalTitle = "english btn"; ObjectID = "r1z-v6-m9Q"; */
+"r1z-v6-m9Q.normalTitle" = "japan btn";
+
+
+/* Class = "UILabel"; text = "Label2"; ObjectID = "vfA-LK-U2V"; */
+"vfA-LK-U2V.text" = "japan test 2";

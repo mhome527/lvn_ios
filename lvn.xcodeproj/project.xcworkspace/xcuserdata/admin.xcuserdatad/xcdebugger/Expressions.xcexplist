@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "lvn.NumberViewController.(setTextNumber (lvn.NumberViewController) -&gt; () -&gt; ()).(closure #1):NumberViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.edtText.text">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "lvn.CoreVietDBImpl.saveTblObj (lvn.CoreVietDBImpl)(SwiftyJSON.JSON) -&gt; ():CoreVietDBImpl.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "json[KEY_VI].stringValue">
+            </PersistentString>
+            <PersistentString
+               value = "contry">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "lvn.NumberViewController.collectionView (lvn.NumberViewController)(ObjectiveC.UICollectionView, didSelectItemAtIndexPath : ObjectiveC.NSIndexPath) -&gt; ():NumberViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "listNumber">
+            </PersistentString>
+            <PersistentString
+               value = "indexPath.row">
+            </PersistentString>
+            <PersistentString
+               value = "listNumber[indexPath.row]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "lvn.PhrasesImpl.convertObject (lvn.PhrasesImpl)(Swift.Array&lt;Swift.AnyObject&gt;) -&gt; Swift.Optional&lt;Swift.Array&lt;lvn.TblVietEx&gt;&gt;:PhrasesImpl.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "Int(entity.kind)">
+            </PersistentString>
+            <PersistentString
+               value = "entity.img">
+            </PersistentString>
+            <PersistentString
+               value = "entity.vi">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>

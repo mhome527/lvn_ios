@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7549" systemVersion="14D131" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="TblMapName" representedClassName="lvn.TblMapName" syncable="YES">
+        <attribute name="filename" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sound" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="TblRec_EN" representedClassName="lvn.TblRec_EN" syncable="YES">
+        <attribute name="ex" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="group_id" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="ot" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="vn" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="word_id" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+    </entity>
+    <entity name="TblRec_ES" representedClassName="lvn.TblRec_ES" syncable="YES">
+        <attribute name="ex" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="group_id" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="ot" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="vn" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="word_id" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+    </entity>
+    <entity name="TblRec_FR" representedClassName="lvn.TblRec_FR" syncable="YES">
+        <attribute name="ex" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="group_id" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="ot" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="vn" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="word_id" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+    </entity>
+    <entity name="TblRec_IT" representedClassName="lvn.TblRec_IT" syncable="YES">
+        <attribute name="ex" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="group_id" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="ot" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="vn" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="word_id" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+    </entity>
+    <entity name="TblRec_JA" representedClassName="lvn.TblRec_JA" syncable="YES">
+        <attribute name="ex" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="group_id" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="ot" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="vn" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="word_id" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+    </entity>
+    <entity name="TblRec_KO" representedClassName="lvn.TblRec_KO" syncable="YES">
+        <attribute name="ex" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="group_id" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="ot" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="vn" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="word_id" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+    </entity>
+    <entity name="TblRec_RU" representedClassName="lvn.TblRec_RU" syncable="YES">
+        <attribute name="ex" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="group_id" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="ot" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="vn" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="word_id" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+    </entity>
+    <entity name="TblVietEN" representedClassName="lvn.TblVietEN" syncable="YES">
+        <attribute name="default_word" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="img" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="kind" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="level" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="o1" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="o2" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="vi" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="TblVietES" representedClassName="lvn.TblVietES" syncable="YES">
+        <attribute name="default_word" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="img" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="kind" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="level" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="o1" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="o2" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="vi" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="TblVietFR" representedClassName="lvn.TblVietFR" syncable="YES">
+        <attribute name="default_word" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="img" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="kind" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="level" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="o1" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="o2" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="vi" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="TblVietIT" representedClassName="lvn.TblVietIT" syncable="YES">
+        <attribute name="default_word" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="img" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="kind" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="level" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="o1" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="o2" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="vi" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="TblVietJA" representedClassName="lvn.TblVietJA" syncable="YES">
+        <attribute name="default_word" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="img" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="kind" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="level" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="o1" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="o2" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="vi" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="TblVietKO" representedClassName="lvn.TblVietKO" syncable="YES">
+        <attribute name="default_word" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="img" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="kind" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="level" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="o1" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="o2" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="vi" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="TblVietRU" representedClassName="lvn.TblVietRU" syncable="YES">
+        <attribute name="default_word" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="img" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="kind" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="level" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="o1" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="o2" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="vi" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="TblMapName" positionX="45" positionY="117" width="128" height="75"/>
+        <element name="TblRec_EN" positionX="36" positionY="108" width="128" height="120"/>
+        <element name="TblRec_ES" positionX="-9" positionY="63" width="128" height="120"/>
+        <element name="TblRec_FR" positionX="9" positionY="81" width="128" height="120"/>
+        <element name="TblRec_IT" positionX="27" positionY="99" width="128" height="120"/>
+        <element name="TblRec_JA" positionX="-9" positionY="63" width="128" height="120"/>
+        <element name="TblRec_KO" positionX="0" positionY="72" width="128" height="120"/>
+        <element name="TblRec_RU" positionX="18" positionY="90" width="128" height="120"/>
+        <element name="TblVietEN" positionX="-63" positionY="-18" width="128" height="150"/>
+        <element name="TblVietES" positionX="36" positionY="117" width="128" height="150"/>
+        <element name="TblVietFR" positionX="0" positionY="99" width="128" height="150"/>
+        <element name="TblVietIT" positionX="18" positionY="108" width="128" height="150"/>
+        <element name="TblVietJA" positionX="-54" positionY="45" width="128" height="150"/>
+        <element name="TblVietKO" positionX="-36" positionY="81" width="128" height="150"/>
+        <element name="TblVietRU" positionX="-18" positionY="90" width="128" height="150"/>
+    </elements>
+</model>
