@@ -30,7 +30,8 @@ class WordViewCell : UICollectionViewCell{
 //        }
 
 //                imgWord.image = UIImage(named: "apple.jpg")
-        if let img = UIImage(named: "images/\(img).jpg") {
+        if let img = UIImage(named: "images/\(img).png") {
+//            img.alpha(0.5)
             imgWord.image = img
         }else{
             Log.print(TAG, msg: "image cant create : \(img), text: \(text)")
@@ -38,4 +39,5 @@ class WordViewCell : UICollectionViewCell{
 
         lblWord.text = text
     }
+    
 }

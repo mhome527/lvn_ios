@@ -8,7 +8,7 @@
 
 import UIKit
 
-class WordsViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, WordsViewDelegate {
+class WordsViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout,  WordsViewDelegate {
     let TAG = "WordsViewController"
     var wordsImpl: WordsImpl!
     var lang:String = "EN"
@@ -28,13 +28,20 @@ class WordsViewController: UIViewController, UICollectionViewDataSource, UIColle
         
 //        var mainImpl:MainImpl = MainImpl()
 //        mainImpl.loadJson()
-
+        
+    
         audioPlay = AudioPlayerManager()
         wordsImpl = WordsImpl(lang: lang, viewDelegate: self)
         wordsImpl.loadData(type_Kind)
 
     }
 
+//    override func viewWillLayoutSubviews(){
+//        Log.print(TAG, msg: "viewWillLayoutSubviews")
+//
+//        collectionVIew.collectionViewLayout.invalidateLayout()
+//    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -92,6 +99,18 @@ class WordsViewController: UIViewController, UICollectionViewDataSource, UIColle
     }
     // end UICollectionViewDataSource
 
+    
+    // Impl UICollectionViewDelegateFlowLayout
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
+        sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+             let width = (collectionView.bounds.size.width) / 3 - 7;
+            Log.print(TAG, msg: "resize cell size: \(width)")
+           
+            let height = width + 10;
+
+            return CGSize(width: width, height: width);
+    }
+    /// end UICollectionViewDelegateFlowLayout
     
     @IBAction func tappedSpeak(sender: AnyObject) {
         audioPlay.setFileNameStr(lblWord.text!)
