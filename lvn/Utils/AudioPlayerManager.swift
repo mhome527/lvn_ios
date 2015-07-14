@@ -21,7 +21,7 @@ class AudioPlayerManager: NSObject, AVAudioPlayerDelegate {
     
     // impl AVAudioPlayerDelegate
     func audioPlayerDidFinishPlaying(player: AVAudioPlayer!, successfully flag: Bool){
-        Log.print(TAG, msg: "play Finish, \(player.accessibilityValue)")
+//        Log.print(TAG, msg: "play Finish, \(player.accessibilityValue)")
         if(isStop == false){
              if (listPlayer.count > 0){
                 listPlayer.removeAtIndex(0)
@@ -44,9 +44,10 @@ class AudioPlayerManager: NSObject, AVAudioPlayerDelegate {
     func setFileName(listNames:[String]){
         var error: NSError?
         self.listNames = listNames
-        for name in listNames {
+        for name1 in listNames {
+            var name:String = name1.stringByReplacingOccurrencesOfString(" ", withString: "")
             if !name.isEmpty && name != "" {
-                let fileURL:NSURL = NSBundle.mainBundle().URLForResource("Sound/\(name)", withExtension: "mp3")!
+                let fileURL:NSURL = NSBundle.mainBundle().URLForResource("Sound/\(name.lowercaseString)", withExtension: "mp3")!
                 var avPlayer = AVAudioPlayer(contentsOfURL: fileURL, fileTypeHint: AVFileTypeMPEGLayer3, error: &error)
                 listPlayer.append(avPlayer)
                 if avPlayer == nil {

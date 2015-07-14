@@ -8,7 +8,7 @@
 
 import UIKit
 
-class FoodViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, WordsViewDelegate {
+class FoodViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, WordsViewDelegate {
 
     let TAG = "FoodViewController"
     var pageImages:[String] = []
@@ -54,13 +54,15 @@ class FoodViewController: UIViewController, UICollectionViewDataSource, UICollec
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
     {
-        return pageImages.count
+        return listData.count
     }
     // The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell
     {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(ID_CELL, forIndexPath: indexPath) as! FoodViewCell
-        cell.imgFood.image = UIImage(named: pageImages[indexPath.row])
+//        cell.imgFood.image = UIImage(named: pageImages[indexPath.row])
+        cell.imgFood.image = UIImage(named: "images/\(listData[indexPath.row].img).png")
+
         return cell
     }
     
@@ -74,11 +76,19 @@ class FoodViewController: UIViewController, UICollectionViewDataSource, UICollec
     // Impl CollectionViewDelegate
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath){
         Log.print(TAG, msg: "row selected: \(indexPath.row + 1)")
-        imgShow.image = UIImage(named: pageImages[indexPath.row])
+        imgShow.image =  UIImage(named: "images/\(listData[indexPath.row].img).png")
     }
-    
     // end CollectionViewDelegate
-   
+    
+    // Impl UICollectionViewDelegateFlowLayout
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
+        sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+            let width = 100
+            let height = width
+            
+            return CGSize(width: width, height: width);
+    }
+    /// end UICollectionViewDelegateFlowLayout
 }
 
 

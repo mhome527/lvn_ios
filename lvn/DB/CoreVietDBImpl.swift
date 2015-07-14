@@ -73,10 +73,13 @@ class CoreVietDBImpl {
         // so it includes the sort descriptor
         //        fetchRequest.sortDescriptors = [sortDescriptor]
         //        let predicate = NSPredicate(format: "%K >= %@", KEY_DATE, 2222)
-        let predicate = NSPredicate(format: "\(KEY_KIND) = \(kind)")
-        // Set the predicate on the fetch request
-        fetchRequest.predicate = predicate
-
+        
+        //kind = 0: search all
+        if kind != 0 {
+            let predicate = NSPredicate(format: "\(KEY_KIND) = \(kind)")
+            // Set the predicate on the fetch request
+            fetchRequest.predicate = predicate
+        }
         return moc.executeFetchRequest(fetchRequest, error: nil)
         
     }

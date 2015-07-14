@@ -22,7 +22,8 @@ class Constant {
     static let DB_VER_IT = 1
    // ID_Storyboard
     static let ID_PHRASES_CELL = "ID_Phrases_Cell"
-    
+    static let ID_SEARCH_CELL = "ID_Search_Cell"
+
      enum ContryName : String {
         case EN = "EN"
         case JA = "JA"
