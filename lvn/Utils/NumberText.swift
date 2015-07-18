@@ -74,7 +74,7 @@ class NumberText{
         return chuoi;
     }
 
-    static func convertNumberToChar(var so:Int) -> String{
+    static func convertNumberToChar(var so:Int64) -> String{
         var chuoi = "", hauto = "";
         var ty:Int
         if so == 0 {
@@ -82,7 +82,7 @@ class NumberText{
         }
         
         do {
-            ty = so % 1000000000;
+            ty = Int(so % 1000000000);
             so = so/1000000000
             if so > 0 {
                 chuoi = NumberText.dochangtrieu(ty, daydu1: true) + hauto + chuoi;

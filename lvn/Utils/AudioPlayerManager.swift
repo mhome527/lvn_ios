@@ -13,7 +13,7 @@ class AudioPlayerManager: NSObject, AVAudioPlayerDelegate {
    
     let TAG = "AudioPlayerManager"
     
-    var avPlayer:AVAudioPlayer!
+//    var avPlayer1:AVAudioPlayer! 
     var listNames:[String] = []
     var listPlayer:[AVAudioPlayer] = []
 //    var currPlayer:AVAudioPlayer!
@@ -42,12 +42,18 @@ class AudioPlayerManager: NSObject, AVAudioPlayerDelegate {
     }
     
     func setFileName(listNames:[String]){
+        //test
+//        readFileIntoAVPlayer()
+        ///
+        
         var error: NSError?
         self.listNames = listNames
         for name1 in listNames {
             var name:String = name1.stringByReplacingOccurrencesOfString(" ", withString: "")
             if !name.isEmpty && name != "" {
                 let fileURL:NSURL = NSBundle.mainBundle().URLForResource("Sound/\(name.lowercaseString)", withExtension: "mp3")!
+//                let fileURL:NSURL = NSBundle.mainBundle().URLForResource("vn", withExtension: "mp3")!
+
                 var avPlayer = AVAudioPlayer(contentsOfURL: fileURL, fileTypeHint: AVFileTypeMPEGLayer3, error: &error)
                 listPlayer.append(avPlayer)
                 if avPlayer == nil {
@@ -57,6 +63,7 @@ class AudioPlayerManager: NSObject, AVAudioPlayerDelegate {
                 } else {
                     avPlayer.delegate = self
                     avPlayer.prepareToPlay()
+                    avPlayer.volume = 1.0
                 }
             }
 
@@ -64,47 +71,35 @@ class AudioPlayerManager: NSObject, AVAudioPlayerDelegate {
     }
     
     func playSound(){
-//        var avPlayer =
+//        avPlayer1.play()
         if (listPlayer.count > 0){
             var currPlayer = listPlayer[0]
+            setSessionPlayback()
             currPlayer.play()
             Log.print(TAG, msg: "playSound count:\(listPlayer.count)")
-
-//            listPlayer.removeAtIndex(0)
             isStop = false
         } else {
             isStop = true
         }
     }
     
-//    func stopSound(){
-//        isStop = true
-//        if let player = currPlayer {
-//            currPlayer.stop()
-//        }
-//    }
-    
-//    func playSound(soundName: String){
-////        self.listFile = listFile
-//        
-//        let fileURL:NSURL = NSBundle.mainBundle().URLForResource(soundName, withExtension: "mp3")!
-//        
-//        // the player must be a field. Otherwise it will be released before playing starts.
-//        var error: NSError?
-//        //        self.avPlayer = AVAudioPlayer(contentsOfURL: fileURL, error: &error)
-//        self.avPlayer = AVAudioPlayer(contentsOfURL: fileURL, fileTypeHint: AVFileTypeMPEGLayer3, error: &error)
-//        if avPlayer == nil {
-//            if let e = error {
-//                println(e.localizedDescription)
-//            }
-//        } else {
-//            avPlayer.delegate = self
-//            avPlayer.prepareToPlay()
-//        }
-//        
-////        avPlayer.delegate = self
-////        avPlayer.prepareToPlay()
-//    }
+    // TH play ko nghe tieng, goi ham nay se dung duoc
+    func setSessionPlayback() {
+        let session:AVAudioSession = AVAudioSession.sharedInstance()
+        var error: NSError?
+        if !session.setCategory(AVAudioSessionCategoryPlayback, error:&error) {
+            println("could not set session category")
+            if let e = error {
+                println(e.localizedDescription)
+            }
+        }
+        if !session.setActive(true, error: &error) {
+            println("could not make session active")
+            if let e = error {
+                println(e.localizedDescription)
+            }
+        }
+    }
 
 }
 

@@ -46,11 +46,11 @@ class NumberViewController: UIViewController , UICollectionViewDelegateFlowLayou
     func edtTextNumberChanged(textField: UITextField) {
         Log.print(TAG, msg: "edtTextNumberChanged: \(textField.text)")
         
-        let str = edtText.text
-        if str.isEmpty{
+        let str = edtText.text as NSString
+        if edtText.text.isEmpty{
             lblText.text = ""
         }else{
-            lblText.text = NumberText.convertNumberToChar(str.toInt()!)
+            lblText.text = NumberText.convertNumberToChar(str.longLongValue)
         }
     }
     
@@ -87,8 +87,9 @@ class NumberViewController: UIViewController , UICollectionViewDelegateFlowLayou
     // Impl CollectionViewDelegate
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath){
         Log.print(TAG, msg: "row selected: \(listNumber[indexPath.row])")
-        let strNumber = listNumber[indexPath.row] as! String
-        let textNumber = NumberText.convertNumberToChar(strNumber.toInt()!)
+        let strNumber = listNumber[indexPath.row] as! NSString
+        
+        let textNumber = NumberText.convertNumberToChar(strNumber.longLongValue)
         if !textNumber.isEmpty && textNumber != "" {
             audioPlay.setFileNameStr(textNumber)
             audioPlay.playSound()
@@ -99,6 +100,23 @@ class NumberViewController: UIViewController , UICollectionViewDelegateFlowLayou
     }
     
     // end CollectionViewDelegate
+    
+    //action
+    
+    @IBAction func tapSound(sender: AnyObject) {
+        let textNumber = lblText.text
+        if !textNumber!.isEmpty && textNumber != "" {
+            audioPlay.setFileNameStr(textNumber!)
+            audioPlay.playSound()
+        }else{
+            Log.print(TAG, msg: "convert number error, text: \(textNumber)")
+            
+        }
+
+    }
+    
+    
+    ///////
     
     func loadAlphabetData(){
         let alphabetPath = NSBundle.mainBundle().pathForResource(Constant.FILENAME_NUMBER, ofType: "plist")

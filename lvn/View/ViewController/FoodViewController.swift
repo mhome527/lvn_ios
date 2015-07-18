@@ -11,7 +11,6 @@ import UIKit
 class FoodViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, WordsViewDelegate {
 
     let TAG = "FoodViewController"
-    var pageImages:[String] = []
     
     var lang:String = "EN"
     let ID_CELL = "food_cell"
@@ -29,8 +28,6 @@ class FoodViewController: UIViewController, UICollectionViewDataSource, UICollec
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        pageImages = ["images/apple.png", "images/beer.png", "images/bear.png", "images/bee.png","images/boat.png"]
         
         audioPlay = AudioPlayerManager()
         wordsImpl = WordsImpl(lang: lang, viewDelegate: self)
