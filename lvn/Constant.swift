@@ -9,6 +9,9 @@
 import UIKit
 
 class Constant {
+    static let IS_DEBUG = true
+    static let IS_CREATE_DB = false
+    
     static let FILENAME_ALPHABET = "AlphabetList"
     static let FILENAME_NUMBER = "NumberList"
     
@@ -32,4 +35,6 @@ class Constant {
         case RU = "RU"
     }
 
+    static let KEY_LANGUAGE = "key_language"
+    static let KEY_COLOR = "key_color"
 }

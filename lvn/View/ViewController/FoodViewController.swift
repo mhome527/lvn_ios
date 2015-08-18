@@ -8,18 +8,19 @@
 
 import UIKit
 
-class FoodViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, WordsViewDelegate {
+class FoodViewController: BaseViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, WordsViewDelegate {
 
     let TAG = "FoodViewController"
     
-    var lang:String = "EN"
+//    var lang:String = "EN"
     let ID_CELL = "food_cell"
     ///
     
-    @IBOutlet weak var pageImage: UIPageControl!
+//    @IBOutlet weak var pageImage: UIPageControl!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var imgShow: UIImageView!
     
+    @IBOutlet weak var lblFood: UILabel!
     ///
     var wordsImpl: WordsImpl!
     var audioPlay: AudioPlayerManager!
@@ -29,9 +30,15 @@ class FoodViewController: UIViewController, UICollectionViewDataSource, UICollec
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        collectionView.backgroundColor = UIColor(white: 1, alpha: 0.0)
+
         audioPlay = AudioPlayerManager()
         wordsImpl = WordsImpl(lang: lang, viewDelegate: self)
         wordsImpl.loadData(3)
+        
+        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        layout.sectionInset = UIEdgeInsets(top: 20, left: 10, bottom: 10, right: 10)
+        layout.itemSize = CGSize(width: 90, height: 90)
         
     }
 
@@ -43,7 +50,13 @@ class FoodViewController: UIViewController, UICollectionViewDataSource, UICollec
     //impl WordsViewDelegate
     func loadWords(listData: [TblVietEx]){
         Log.print(TAG, msg: "loadWords count: \(listData.count)")
+        
         self.listData = listData
+        
+        let item = listData[0]
+        lblFood.text = item.viet
+        imgShow.image = UIImage(named: "images/f_\(item.img)_l.png")
+        
         collectionView.reloadData()
     }
     
@@ -53,6 +66,7 @@ class FoodViewController: UIViewController, UICollectionViewDataSource, UICollec
     {
         return listData.count
     }
+    
     // The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell
     {
@@ -73,19 +87,26 @@ class FoodViewController: UIViewController, UICollectionViewDataSource, UICollec
     // Impl CollectionViewDelegate
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath){
         Log.print(TAG, msg: "row selected: \(indexPath.row + 1)")
-        imgShow.image =  UIImage(named: "images/\(listData[indexPath.row].img).png")
+        let item = listData[indexPath.row];
+        imgShow.image =  UIImage(named: "images/f_\(listData[indexPath.row].img)_l.png")
+        lblFood.text = item.viet
     }
     // end CollectionViewDelegate
     
     // Impl UICollectionViewDelegateFlowLayout
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
-        sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-            let width = 100
-            let height = width
-            
-            return CGSize(width: width, height: width);
-    }
+//    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
+//        sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+//            let width = 100
+//            let height = width
+//            
+//            return CGSize(width: width, height: width);
+//    }
     /// end UICollectionViewDelegateFlowLayout
+    
+    @IBAction func eventSound(sender: AnyObject) {
+        audioPlay.setFileNameStr(lblFood.text!)
+        audioPlay.playSound()
+    }
 }
 
 

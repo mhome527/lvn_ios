@@ -42,8 +42,7 @@ class WordsImpl{
         if lang == "\(Constant.ContryName.JA.rawValue)"  {
             if let listV = listViet as? [TblVietJA] {
                 for entity in listV {
-                    
-                    
+
                     let tbl = TblVietEx(viet: entity.vi, other: entity.o1, kind: Int(entity.kind), img: entity.img)
                     
                     tblVietEx.append(tbl)

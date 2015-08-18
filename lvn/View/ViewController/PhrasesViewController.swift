@@ -8,11 +8,11 @@
 
 import UIKit
 
-class PhrasesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchDisplayDelegate, UISearchBarDelegate,  PhrasesViewDelegate {
+class PhrasesViewController: BaseViewController, UITableViewDataSource, UITableViewDelegate, UISearchDisplayDelegate, UISearchBarDelegate,  PhrasesViewDelegate {
 
     let TAG = "PhrasesViewController"
     var phrasesImp: PhrasesImpl!
-    let lang = "EN"
+//    let lang = "EN"
     var listData: [TblVietEx]!
     var filteredData = [TblVietEx]()
     var audioPlay: AudioPlayerManager!
@@ -51,24 +51,6 @@ class PhrasesViewController: UIViewController, UITableViewDataSource, UITableVie
         // Dispose of any resources that can be recreated.
     }
     
-//    func testData(){
-//        let test = "<font color=\"green\"> Tôi</font> có thể <font color=\"blue\">giúp</font> bạn không?"
-//        let attrViet = NSAttributedString(
-//            data: test.dataUsingEncoding(NSUnicodeStringEncoding, allowLossyConversion: true)!,
-//            options: [ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType],
-//            documentAttributes: nil,
-//            error: nil)
-//        Log.print(TAG, msg: "\(attrViet)")
-//    }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
     
     //implement PhrasesViewDelegate
     func loadPhrases(listData: [TblVietEx]) {
@@ -142,6 +124,14 @@ class PhrasesViewController: UIViewController, UITableViewDataSource, UITableVie
 
     }
     
+    func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 80
+    }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat{
+        return 80
+    }
+
     //// end
     
     // impl UISearchDisplayDelegate
@@ -174,11 +164,32 @@ class PhrasesViewController: UIViewController, UITableViewDataSource, UITableVie
             
 
             var categoryMatch = (scope == "All")
-            var stringMatch = tblViet.other.rangeOfString(searchText)
-            var b = categoryMatch && (stringMatch != nil)
-//            Log.print("filter", msg: "other check= \(b); value: \(tblViet.other)")
-//            return categoryMatch && (stringMatch != nil)
+            var search = searchText.lowercaseString
+            
+            var text1 = tblViet.viet.stringByFoldingWithOptions(NSStringCompareOptions.DiacriticInsensitiveSearch, locale: NSLocale.currentLocale())
+            var text2 = tblViet.other.stringByFoldingWithOptions(NSStringCompareOptions.DiacriticInsensitiveSearch, locale: NSLocale.currentLocale())
+            
+            
+            text1 = text1.lowercaseString.stringByReplacingOccurrencesOfString("\u{1}", withString: "").stringByReplacingOccurrencesOfString("\u{2}", withString: "").stringByReplacingOccurrencesOfString("\u{3}", withString: "").stringByReplacingOccurrencesOfString("\u{4}", withString: "")
+            
+            
+            //            text1 = text1.lowercaseString.stringByReplacingOccurrencesOfString("đ", withString: "d")
+            
+            
+            
+            text2 = text2.lowercaseString.stringByReplacingOccurrencesOfString("\u{1}", withString: "").stringByReplacingOccurrencesOfString("\u{2}", withString: "").stringByReplacingOccurrencesOfString("\u{3}", withString: "").stringByReplacingOccurrencesOfString("\u{4}", withString: "")
+            
+            
+            //            text2 = text2.lowercaseString.stringByReplacingOccurrencesOfString("đ", withString: "d")
+            
+            var stringMatch = text1.rangeOfString(search)
+            var stringMatch2 = text2.rangeOfString(search)
+            
+            
+            var b = categoryMatch && ((stringMatch != nil) || (stringMatch2 != nil))
+            
             return b
+
             
         })
         

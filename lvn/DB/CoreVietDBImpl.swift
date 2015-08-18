@@ -79,6 +79,9 @@ class CoreVietDBImpl {
             let predicate = NSPredicate(format: "\(KEY_KIND) = \(kind)")
             // Set the predicate on the fetch request
             fetchRequest.predicate = predicate
+            
+            // newest first
+            fetchRequest.sortDescriptors = [NSSortDescriptor(key: "vi", ascending: true)]
         }
         return moc.executeFetchRequest(fetchRequest, error: nil)
         
@@ -89,7 +92,7 @@ class CoreVietDBImpl {
     func saveVietTable(json: JSON){
          Log.print(TAG, msg: "saveVietTable listData ....")
         let listData = json[KEY_VIET].arrayValue
-        Log.print(TAG, msg: "saveVietTable listData count: \(listData.count)")
+        Log.print(TAG, msg: "saveVietTable listData count: \(listData.count); lang:\(contry.rawValue)")
         for entity in listData {
            saveTblObj(entity)
         }

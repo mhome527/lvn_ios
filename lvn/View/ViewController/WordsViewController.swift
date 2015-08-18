@@ -8,10 +8,11 @@
 
 import UIKit
 
-class WordsViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout,  WordsViewDelegate {
+class WordsViewController: BaseViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout,  WordsViewDelegate {
+    
     let TAG = "WordsViewController"
     var wordsImpl: WordsImpl!
-    var lang:String = "EN"
+//    var lang:String = "EN"
     var listData: [TblVietEx]!
     let ID_WORD_CELL = "id_word_cell"
     var audioPlay: AudioPlayerManager!
@@ -28,12 +29,13 @@ class WordsViewController: UIViewController, UICollectionViewDataSource, UIColle
         
 //        var mainImpl:MainImpl = MainImpl()
 //        mainImpl.loadJson()
+     collectionVIew.backgroundColor = UIColor(white: 1, alpha: 0)
         
-    
         audioPlay = AudioPlayerManager()
         wordsImpl = WordsImpl(lang: lang, viewDelegate: self)
         wordsImpl.loadData(type_Kind)
 
+        
     }
 
 //    override func viewWillLayoutSubviews(){
@@ -93,7 +95,8 @@ class WordsViewController: UIViewController, UICollectionViewDataSource, UIColle
     // Impl UICollectionViewDataSource
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath){
         let words = listData[indexPath.row].viet
-        lblWord.text = words
+        lblWord.text = "\(listData[indexPath.row].viet) : \(listData[indexPath.row].other)"
+        
         audioPlay.setFileNameStr(words)
         audioPlay.playSound()
     }
@@ -117,4 +120,8 @@ class WordsViewController: UIViewController, UICollectionViewDataSource, UIColle
         audioPlay.playSound()
     }
     
+    ////////
+
+    
 }
+

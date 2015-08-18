@@ -10,6 +10,8 @@ import Foundation
 
 class Log{
     static func print(TAG: String, msg: AnyObject){
-        println("\n\(TAG) --> \(msg)")
+        if Constant.IS_DEBUG == true {
+            println("\n\(TAG) --> \(msg)")
+        }
     }
 }

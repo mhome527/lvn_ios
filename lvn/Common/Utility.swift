@@ -131,4 +131,42 @@ public class Utility{
         return tblVietEx
         
     }
+    
+    static func controllerAvailable(className: String) -> Bool{
+        if let gotModernClass: AnyClass = NSClassFromString(className) {
+            return true
+        }
+        else {
+            return false
+        }
+    }
+    
+    //write to NSUserDefaults
+    static func saveObj(key: String, entity: AnyObject){
+        var userDefaults: NSUserDefaults = NSUserDefaults.standardUserDefaults()
+        
+        userDefaults.setObject(NSKeyedArchiver.archivedDataWithRootObject(entity), forKey: key)
+        userDefaults.synchronize();
+    }
+    
+    // read to NSUserDefaults
+    static func getObj(key: String) -> AnyObject? {
+        
+        var userDefaults: NSUserDefaults = NSUserDefaults.standardUserDefaults()
+        if let data = userDefaults.objectForKey(key) as? NSData {
+            return NSKeyedUnarchiver.unarchiveObjectWithData(data)!
+        }
+        return nil
+        //        var userDefaults: NSUserDefaults = NSUserDefaults.standardUserDefaults()
+        //        var data = userDefaults.objectForKey(key) as? NSData
+        //        return NSKeyedUnarchiver.unarchiveObjectWithData(data!)!
+    }
+    
+    //remove NSUserDefaults
+    static func clearAllObj() {
+        let appDomain = NSBundle.mainBundle().bundleIdentifier!
+        NSUserDefaults.standardUserDefaults().removePersistentDomainForName(appDomain)
+    }
+    
+
 }

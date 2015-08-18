@@ -12,11 +12,11 @@ import SwiftyJSON
 class MainImpl {
     let TAG = "MainImple"
     var lang: String
-    var vietDBImpl: CoreVietDBImpl
+    var vietDBImpl: CoreVietDBImpl!
     
     init(){
         self.lang = "EN"
-        vietDBImpl = CoreVietDBImpl(lang: lang)
+//        vietDBImpl = CoreVietDBImpl(lang: lang)
 //       let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
     }
     
@@ -24,14 +24,56 @@ class MainImpl {
         
         
 //        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
-            if let path = NSBundle.mainBundle().pathForResource("en", ofType: "txt") {
+        
+        vietDBImpl = CoreVietDBImpl(lang: "EN")
+        if let path = NSBundle.mainBundle().pathForResource("en", ofType: "txt") {
                
-                if let data = NSData(contentsOfMappedFile: path) {
+            if let data = NSData(contentsOfMappedFile: path) {
                      Log.print(self.TAG, msg:"loadJson 2...")
                     let json = JSON(data: data, options: NSJSONReadingOptions.AllowFragments, error: nil)
                     self.vietDBImpl.saveVietTable(json)
-                }
             }
+        }
+        
+        vietDBImpl = CoreVietDBImpl(lang: "JA")
+        if let path = NSBundle.mainBundle().pathForResource("ja", ofType: "txt") {
+            
+            if let data = NSData(contentsOfMappedFile: path) {
+                Log.print(self.TAG, msg:"loadJson 2...")
+                let json = JSON(data: data, options: NSJSONReadingOptions.AllowFragments, error: nil)
+                self.vietDBImpl.saveVietTable(json)
+            }
+        }
+        
+        vietDBImpl = CoreVietDBImpl(lang: "KO")
+        if let path = NSBundle.mainBundle().pathForResource("ko", ofType: "txt") {
+            
+            if let data = NSData(contentsOfMappedFile: path) {
+                Log.print(self.TAG, msg:"loadJson 2...")
+                let json = JSON(data: data, options: NSJSONReadingOptions.AllowFragments, error: nil)
+                self.vietDBImpl.saveVietTable(json)
+            }
+        }
+        
+        vietDBImpl = CoreVietDBImpl(lang: "FR")
+        if let path = NSBundle.mainBundle().pathForResource("fr", ofType: "txt") {
+            
+            if let data = NSData(contentsOfMappedFile: path) {
+                Log.print(self.TAG, msg:"loadJson 2...")
+                let json = JSON(data: data, options: NSJSONReadingOptions.AllowFragments, error: nil)
+                self.vietDBImpl.saveVietTable(json)
+            }
+        }
+        
+        vietDBImpl = CoreVietDBImpl(lang: "RU")
+        if let path = NSBundle.mainBundle().pathForResource("ru", ofType: "txt") {
+            
+            if let data = NSData(contentsOfMappedFile: path) {
+                Log.print(self.TAG, msg:"loadJson 2...")
+                let json = JSON(data: data, options: NSJSONReadingOptions.AllowFragments, error: nil)
+                self.vietDBImpl.saveVietTable(json)
+            }
+        }
 //        })
         Log.print(TAG, msg: "loadJson ...")
     }

@@ -8,15 +8,17 @@
 
 import UIKit
 
-class AlphabetViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
+class AlphabetViewController: BaseViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
 
     @IBOutlet var collectionAlphabet: UICollectionView!
     let ID_COLLECTION_CELL = "alphabet_cell"
     var listAlphabet: NSArray!
     var audioPlay: AudioPlayerManager!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        collectionAlphabet.backgroundColor = UIColor(white: 1, alpha: 0)
+
         // Do any additional setup after loading the view.
         loadAlphabetData()
         audioPlay = AudioPlayerManager()

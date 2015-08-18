@@ -63,6 +63,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Create the coordinator and store
         var coordinator: NSPersistentStoreCoordinator? = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
         let url = self.applicationDocumentsDirectory.URLByAppendingPathComponent("lvn.sqlite")
+        Log.print("App", msg: "path: \(url)")
+        
+        /////////////////////
+        ///add db to project
+        if Constant.IS_CREATE_DB == false {
+            if !NSFileManager.defaultManager().fileExistsAtPath(url.path!) {
+                let sourceSqliteURLs = [NSBundle.mainBundle().URLForResource("lvn", withExtension: "sqlite")!, NSBundle.mainBundle().URLForResource("lvn", withExtension: "sqlite-wal")!, NSBundle.mainBundle().URLForResource("lvn", withExtension: "sqlite-shm")!]
+            
+                let destSqliteURLs = [self.applicationDocumentsDirectory.URLByAppendingPathComponent("lvn.sqlite"),
+                    self.applicationDocumentsDirectory.URLByAppendingPathComponent("lvn.sqlite-wal"),
+                    self.applicationDocumentsDirectory.URLByAppendingPathComponent("lvn.sqlite-shm")]
+            
+                var error:NSError? = nil
+                for var index = 0; index < sourceSqliteURLs.count; index++ {
+                    NSFileManager.defaultManager().copyItemAtURL(sourceSqliteURLs[index], toURL: destSqliteURLs[index], error: &error)
+                }
+            }
+        }
+        ///end add
+        
+        
         var error: NSError? = nil
         var failureReason = "There was an error creating or loading the application's saved data."
         if coordinator!.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: nil, error: &error) == nil {

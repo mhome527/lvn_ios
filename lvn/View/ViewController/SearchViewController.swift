@@ -8,11 +8,11 @@
 
 import UIKit
 
-class SearchViewController: UIViewController , UITableViewDataSource, UITableViewDelegate, UISearchDisplayDelegate, UISearchBarDelegate,  PhrasesViewDelegate {
+class SearchViewController: BaseViewController , UITableViewDataSource, UITableViewDelegate, UISearchDisplayDelegate, UISearchBarDelegate,  PhrasesViewDelegate, UITextFieldDelegate {
     
     let TAG = "PhrasesViewController"
     var phrasesImp: PhrasesImpl!
-    let lang = "EN"
+//    let lang = "EN"
     var listData: [TblVietEx]!
     var filteredData = [TblVietEx]()
     var audioPlay: AudioPlayerManager!
@@ -21,14 +21,23 @@ class SearchViewController: UIViewController , UITableViewDataSource, UITableVie
     
     
     @IBOutlet weak var tableSearch: UITableView!
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         searchImpl = SearchImpl(lang: lang, viewDelegate: self)
         searchImpl.loadData()
         
+//        tableSearch.estimatedRowHeight = 150.0
+//        tableSearch.rowHeight = UITableViewAutomaticDimension
+
+        
         audioPlay = AudioPlayerManager()
+        
+        let b = isLandscapeOrientation()
+        
+
+        Log.print(TAG, msg: "Orientation: \(b)")
 
     }
 
@@ -87,7 +96,9 @@ class SearchViewController: UIViewController , UITableViewDataSource, UITableVie
         //        let entity = listData[indexPath.row]
         //        cell.setView(entity.viet, ot: entity.other)
 //        cell.setAttrView(entity.arrViet, ot: entity.arrOther)
-        
+//        cell.setData(<#vi: String#>, o1: <#String#>, img: <#String#>)
+        cell.setData(entity.viet, o1: entity.other, img: entity.img)
+//        tableSearch.rowHeight = 160
         return cell
     }
     
@@ -108,6 +119,14 @@ class SearchViewController: UIViewController , UITableViewDataSource, UITableVie
         audioPlay.setFileNameStr(vn)
         audioPlay.playSound()
         
+    }
+    
+    func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 80
+    }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat{
+        return 80
     }
     
     //// end
@@ -132,25 +151,53 @@ class SearchViewController: UIViewController , UITableViewDataSource, UITableVie
         return true
         
     }
+    
+//    func searchDisplayController(controller: UISearchDisplayController, didLoadSearchResultsTableView tableView: UITableView)
+//    {
+//        tableSearch.rowHeight = 100
+//    }
     // end UISearchDisplayDelegate
     
     func filterContenctsForSearchText(searchText: String, scope: String = "All")
     {
         
-        Log.print(TAG, msg: "filterContenctsForSearchText 2, text: \(searchText)")
+//        Log.print(TAG, msg: "filterContenctsForSearchText 2, text: \(searchText)")
         self.filteredData = self.listData.filter({( tblViet : TblVietEx) -> Bool in
             
             
             var categoryMatch = (scope == "All")
-            var stringMatch = tblViet.other.rangeOfString(searchText)
-            var b = categoryMatch && (stringMatch != nil)
-            //            Log.print("filter", msg: "other check= \(b); value: \(tblViet.other)")
-            //            return categoryMatch && (stringMatch != nil)
+            var search = searchText.lowercaseString
+
+            var text1 = tblViet.viet.stringByFoldingWithOptions(NSStringCompareOptions.DiacriticInsensitiveSearch, locale: NSLocale.currentLocale())
+             var text2 = tblViet.other.stringByFoldingWithOptions(NSStringCompareOptions.DiacriticInsensitiveSearch, locale: NSLocale.currentLocale())
+            
+            
+            text1 = text1.lowercaseString.stringByReplacingOccurrencesOfString("\u{1}", withString: "").stringByReplacingOccurrencesOfString("\u{2}", withString: "").stringByReplacingOccurrencesOfString("\u{3}", withString: "").stringByReplacingOccurrencesOfString("\u{4}", withString: "")
+
+            
+//            text1 = text1.lowercaseString.stringByReplacingOccurrencesOfString("đ", withString: "d")
+            
+           
+           
+            text2 = text2.lowercaseString.stringByReplacingOccurrencesOfString("\u{1}", withString: "").stringByReplacingOccurrencesOfString("\u{2}", withString: "").stringByReplacingOccurrencesOfString("\u{3}", withString: "").stringByReplacingOccurrencesOfString("\u{4}", withString: "")
+
+            
+//            text2 = text2.lowercaseString.stringByReplacingOccurrencesOfString("đ", withString: "d")
+
+            var stringMatch = text1.rangeOfString(search)
+            var stringMatch2 = text2.rangeOfString(search)
+
+            
+            var b = categoryMatch && ((stringMatch != nil) || (stringMatch2 != nil))
+
             return b
             
         })
-        
-        
     }
+    
+    func isLandscapeOrientation() -> Bool {
+        return UIInterfaceOrientationIsLandscape(UIApplication.sharedApplication().statusBarOrientation)
+    }
+    
 
 }

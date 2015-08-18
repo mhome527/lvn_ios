@@ -15,7 +15,7 @@ class AlphabetViewCell: UICollectionViewCell {
     @IBOutlet var lowerLabel: UILabel!
     
     func setData(word: String){
-        upperLabel.text = word
+        upperLabel.text = word.uppercaseString
         lowerLabel.text = word
     }
 }

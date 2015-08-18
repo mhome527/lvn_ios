@@ -8,7 +8,7 @@
 
 import UIKit
 
-class NumberViewController: UIViewController , UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UITextFieldDelegate {
+class NumberViewController: BaseViewController , UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UITextFieldDelegate {
     
     let TAG = "NumberViewController"
     
@@ -22,19 +22,29 @@ class NumberViewController: UIViewController , UICollectionViewDelegateFlowLayou
     
     
     /////
-    let ID_COLLECTION_CELL = "alphabet_cell"
+    let ID_COLLECTION_CELL = "number_cell"
     var listNumber: NSArray!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
-        loadAlphabetData()
-        collectionNumber.backgroundColor = UIColor(white: 1, alpha: 0.3)
+        loadNumberData()
+        collectionNumber.backgroundColor = UIColor(white: 1, alpha: 0.0)
 
         edtText.delegate = self
         edtText.addTarget(self, action:"edtTextNumberChanged:", forControlEvents:UIControlEvents.EditingChanged)
         audioPlay = AudioPlayerManager()
+        
+        //resize collectionView
+        if let layout = collectionNumber.collectionViewLayout as? UICollectionViewFlowLayout {
+            let itemWidth = (collectionNumber.bounds.width - 30) / 3.0
+            let itemHeight = layout.itemSize.height
+            layout.itemSize = CGSize(width: itemWidth, height: itemHeight)
+            layout.invalidateLayout()
+        }
+        
+
     }
     
     override func didReceiveMemoryWarning() {
@@ -54,6 +64,8 @@ class NumberViewController: UIViewController , UICollectionViewDelegateFlowLayou
         }
     }
     
+    
+    
 //    func setTextNumber(){
 //        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
 //            let str = self.edtText.text
@@ -64,6 +76,11 @@ class NumberViewController: UIViewController , UICollectionViewDelegateFlowLayou
 //
 //    }
     
+    //////
+
+    
+    
+    //////
     
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         return 1
@@ -75,9 +92,10 @@ class NumberViewController: UIViewController , UICollectionViewDelegateFlowLayou
     
     // The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell{
-        var cell = collectionView.dequeueReusableCellWithReuseIdentifier(ID_COLLECTION_CELL, forIndexPath: indexPath) as! AlphabetViewCell
-        let alphabet = listNumber[indexPath.row] as! String
-        cell.setData(alphabet)
+        var cell = collectionView.dequeueReusableCellWithReuseIdentifier(ID_COLLECTION_CELL, forIndexPath: indexPath) as! NumberViewCell
+        let number = listNumber[indexPath.row] as! NSString
+        let numberText = NumberText.convertNumberToChar(number.longLongValue)
+        cell.setData(number as String, numberText: numberText)
         //        cell.backgroundColor = UIColor(white: 1, alpha: 0.3)
 
         return cell
@@ -88,15 +106,20 @@ class NumberViewController: UIViewController , UICollectionViewDelegateFlowLayou
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath){
         Log.print(TAG, msg: "row selected: \(listNumber[indexPath.row])")
         let strNumber = listNumber[indexPath.row] as! NSString
+        edtText.text = strNumber as String
         
         let textNumber = NumberText.convertNumberToChar(strNumber.longLongValue)
         if !textNumber.isEmpty && textNumber != "" {
+            lblText.text = textNumber
+
             audioPlay.setFileNameStr(textNumber)
             audioPlay.playSound()
         }else{
             Log.print(TAG, msg: "convert number error, text: \(textNumber)")
 
         }
+        
+        view.endEditing(true)
     }
     
     // end CollectionViewDelegate
@@ -118,13 +141,21 @@ class NumberViewController: UIViewController , UICollectionViewDelegateFlowLayou
     
     ///////
     
-    func loadAlphabetData(){
+    func loadNumberData(){
         let alphabetPath = NSBundle.mainBundle().pathForResource(Constant.FILENAME_NUMBER, ofType: "plist")
         listNumber = NSArray(contentsOfFile: alphabetPath!)
         //        for  data in listAlphabet  {
         //            println("count: \(data)" )
         //        }
         
+    }
+    
+    //Calls this function when the tap is recognized.
+    func DismissKeyboard(){
+//         edtText.resignFirstResponder()
+//        collectionNumber.resignFirstResponder()
+        //Causes the view (or one of its embedded text fields) to resign the first responder status.
+        view.endEditing(true)
     }
     
 

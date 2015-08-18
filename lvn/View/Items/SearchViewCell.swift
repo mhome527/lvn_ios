@@ -29,6 +29,9 @@ class SearchViewCell: UITableViewCell {
         if let img = UIImage(named: "images/\(img).png") {
             //            img.alpha(0.5)
             imgView.image = img
+            imgView?.hidden = false
+        }else{
+            imgView?.hidden = true
         }
         lblViet.text = vi
         lblOther.text = o1

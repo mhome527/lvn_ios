@@ -8,21 +8,25 @@
 
 import UIKit
 
-class MainViewController: UIViewController {
+class MainViewController: BaseViewController, UIActionSheetDelegate {
 
     let TAG  = "MainViewController"
-    var mainImpl:MainImpl!
+//    var mainImpl:MainImpl!
     
     let ID_STORYBOARD_ALPHABET = "id_storyboard_alphabet"
     let ID_STORYBOARD_NUMBER = "id_storyboard_number"
     let ID_ACTION_WORDS = "id_words"
+    let ID_ACTION_TRANSLATE = "id_translate"
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        mainImpl = MainImpl()
-        mainImpl.loadJson()
-        // Do any additional setup after loading the view.
+// create and insert table
+        if Constant.IS_CREATE_DB == true {
+            let mainImpl = MainImpl()
+            mainImpl.loadJson()
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -30,16 +34,6 @@ class MainViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         Log.print(TAG, msg:"id: \(segue.identifier)")
@@ -50,10 +44,26 @@ class MainViewController: UIViewController {
 
         }else{
             Log.print(TAG, msg:"other form")
-
         }
         
     }
+    
+    @IBAction func changeColorBg(sender: AnyObject) {
+        if color_type == "blue" {
+            color_type = "pink"
+        }
+        else if color_type == "pink" {
+            color_type = "green"
+        }
+        else{
+            color_type = "blue"
+        }
+        
+        Utility.saveObj(Constant.KEY_COLOR, entity: color_type)
+
+        chaneBackground()
+    }
+    
     
     @IBAction func actionAlphabet(sender: AnyObject) {
         let vc = AlphabetViewController(nibName: ID_STORYBOARD_ALPHABET, bundle: nil)
@@ -88,6 +98,161 @@ class MainViewController: UIViewController {
     }
     
     
-}
+    @IBAction func actionSetting(sender: AnyObject) {
+        if Utility.controllerAvailable("UIAlertController"){
+            showDialogIOS8()
+        }else{
+            showDialogIOS7()
+        }
+
+        
+    }
+    
+    /////// Impl UIActionSheetDelegate
+    func actionSheet(actionSheet: UIActionSheet, clickedButtonAtIndex buttonIndex: Int){
+        if( buttonIndex == 2){
+            self.lang = "JA"
+             println("Ja")
+        }
+        if( buttonIndex == 3){
+            self.lang = "KO"
+             println("Ko")
+        }
+        if( buttonIndex == 4){
+            self.lang = "FR"
+            println("Fr")
+        }
+        if( buttonIndex == 5){
+            self.lang = "RU"
+             println("Ru")
+        }
+        else{
+            self.lang = "EN"
+             println("E")
+        }
+    }
+    /////// end UIActionSheetDelegate
+    
+    func showDialogIOS8(){
+        let optionMenu = UIAlertController(title: nil, message: "Language", preferredStyle: .ActionSheet)
+        
+        let optionVE = UIAlertAction(title: "V-E", style: .Default, handler: {
+            (alert: UIAlertAction!) -> Void in
+             self.lang = "EN"
+            Utility.saveObj(Constant.KEY_LANGUAGE, entity: self.lang)
+
+             Log.print(self.TAG, msg:"E")
+            
+        })
+        
+        let optionVJ = UIAlertAction(title: "V-J", style: .Default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            Log.print(self.TAG, msg:"J")
+            self.lang = "JA"
+            Utility.saveObj(Constant.KEY_LANGUAGE, entity: self.lang)
+
+        })
+        
+        let optionVK = UIAlertAction(title: "V-K", style: .Default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            println("K")
+            self.lang = "KO"
+            Utility.saveObj(Constant.KEY_LANGUAGE, entity: self.lang)
+
+        })
+        
+        let optionVF = UIAlertAction(title: "V-F", style: .Default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            println("F")
+            self.lang = "FR"
+            Utility.saveObj(Constant.KEY_LANGUAGE, entity: self.lang)
+        })
+        
+        let optionVR = UIAlertAction(title: "V-R", style: .Default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            println("R")
+            self.lang = "VR"
+            Utility.saveObj(Constant.KEY_LANGUAGE, entity: self.lang)
+        })
+        
+        let optionCancel = UIAlertAction(title: "Cancel", style: .Cancel, handler: {
+            (alert: UIAlertAction!) -> Void in
+            println("Cancel")
+            
+        })
+        
+        // 4
+        optionMenu.addAction(optionVE)
+        optionMenu.addAction(optionVJ)
+        optionMenu.addAction(optionVK)
+        optionMenu.addAction(optionVF)
+        optionMenu.addAction(optionVR)
+        optionMenu.addAction(optionCancel)
+        
+        // 5
+        self.presentViewController(optionMenu, animated: true, completion: nil)
+    }
+
+    func showDialogIOS7(){
+        var observerObject: NSObjectProtocol?
+        let alertController = BPCompatibleAlertController(title: nil, message: "Language", alertStyle: BPCompatibleAlertControllerStyle.Alert)
+        alertController.postActionHandlerCleanupFunction =  {
+            if (observerObject != nil)
+            {
+                NSNotificationCenter.defaultCenter().removeObserver(observerObject!)
+                observerObject = nil
+            }
+        }
+        
+        let actionJa = BPCompatibleAlertAction.defaultActionWithTitle("JA", handler: { (action) in
+            self.lang = "JA"
+            Utility.saveObj(Constant.KEY_LANGUAGE, entity: self.lang)
+            Log.print(self.TAG, msg:"JA")
+        })
+        
+        let actionKo = BPCompatibleAlertAction.defaultActionWithTitle("KO", handler: { (action) in
+            self.lang = "KO"
+             Utility.saveObj(Constant.KEY_LANGUAGE, entity: self.lang)
+            Log.print(self.TAG, msg:"KO")
+        })
+        
+        let actionFr = BPCompatibleAlertAction.defaultActionWithTitle("FR", handler: { (action) in
+            self.lang = "FR"
+             Utility.saveObj(Constant.KEY_LANGUAGE, entity: self.lang)
+            Log.print(self.TAG, msg:"FR")
+        })
+        
+        let actionRu = BPCompatibleAlertAction.defaultActionWithTitle("RU", handler: { (action) in
+            self.lang = "RU"
+             Utility.saveObj(Constant.KEY_LANGUAGE, entity: self.lang)
+            Log.print(self.TAG, msg:"RU")
+        })
+       
+        let actionDefault = BPCompatibleAlertAction.defaultActionWithTitle("EN", handler: { (action) in
+            self.lang = "EN"
+             Utility.saveObj(Constant.KEY_LANGUAGE, entity: self.lang)
+            Log.print(self.TAG, msg:"EN")
+        })
+
+        
+        alertController.addAction(actionJa)
+        alertController.addAction(actionKo)
+        alertController.addAction(actionFr)
+        alertController.addAction(actionRu)
+        alertController.addAction(actionDefault)
+
+        
+        
+        alertController.addAction(BPCompatibleAlertAction.cancelActionWithTitle("Cancel", handler: { (action) in
+            Log.print(self.TAG, msg:"Cancel")
+        }))
+        
+        alertController.presentFrom(self.navigationController, animated: true) { () in
+            // Completion handler
+        }
+
+    }
+
+  }
 
 
