@@ -30,7 +30,7 @@ class NumberText{
         } else if daydu && donvi > 0  {
             chuoi = " lẻ";
         }
-        if (donvi==5 && chuc>1) {
+        if (donvi==5 && chuc>=1) {
             chuoi += " lăm";
         } else if (donvi>1||(donvi==1&&chuc==0)) {
             chuoi += " " + NumberText.mangso[ donvi ];

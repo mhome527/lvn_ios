@@ -17,9 +17,10 @@ class WordsViewController: BaseViewController, UICollectionViewDataSource, UICol
     let ID_WORD_CELL = "id_word_cell"
     var audioPlay: AudioPlayerManager!
     var type_Kind: Int = 1
+    var widthCell:CGFloat!
+    var currCell:UICollectionViewCell!
     
-    //controll
-    @IBOutlet var collectionVIew: UICollectionView!
+    @IBOutlet weak var collectionView: UICollectionView!
     
     @IBOutlet weak var lblWord: UILabel!
     
@@ -29,7 +30,8 @@ class WordsViewController: BaseViewController, UICollectionViewDataSource, UICol
         
 //        var mainImpl:MainImpl = MainImpl()
 //        mainImpl.loadJson()
-     collectionVIew.backgroundColor = UIColor(white: 1, alpha: 0)
+        setWidthCell()
+        collectionView.backgroundColor = UIColor(white: 1, alpha: 0)
         
         audioPlay = AudioPlayerManager()
         wordsImpl = WordsImpl(lang: lang, viewDelegate: self)
@@ -63,7 +65,7 @@ class WordsViewController: BaseViewController, UICollectionViewDataSource, UICol
         Log.print(TAG, msg: "loadWords count: \(listData.count)")
         self.listData = listData
         lblWord.text = "\(listData[0].viet) : \(listData[0].other)"
-        collectionVIew.reloadData()
+        collectionView.reloadData()
 //        dispatch_async(dispatch_get_main_queue(), {
 //            self.collectionVIew.reloadData
 //        })
@@ -83,6 +85,13 @@ class WordsViewController: BaseViewController, UICollectionViewDataSource, UICol
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell{
 //        Log.print(TAG, msg: "collection cell....")
         var cell = collectionView.dequeueReusableCellWithReuseIdentifier(ID_WORD_CELL, forIndexPath: indexPath) as! WordViewCell
+        
+        if indexPath.row == 0 {
+            currCell = cell
+            currCell?.layer.borderWidth = 2.0
+            currCell?.layer.borderColor = UIColor.yellowColor().CGColor
+
+        }
         cell.setData(listData[indexPath.row].img, text: listData[indexPath.row].viet)
         return cell
     
@@ -97,6 +106,17 @@ class WordsViewController: BaseViewController, UICollectionViewDataSource, UICol
         let words = listData[indexPath.row].viet
         lblWord.text = "\(listData[indexPath.row].viet) : \(listData[indexPath.row].other)"
         
+        //highlight selected cell
+        if let cell = currCell {
+            currCell?.layer.borderWidth = 0
+            currCell?.layer.borderColor = UIColor.clearColor().CGColor
+        }
+        
+        currCell = collectionView.cellForItemAtIndexPath(indexPath)
+        currCell?.layer.borderWidth = 2.0
+        currCell?.layer.borderColor = UIColor.yellowColor().CGColor
+        ////
+        
         audioPlay.setFileNameStr(words)
         audioPlay.playSound()
     }
@@ -106,12 +126,13 @@ class WordsViewController: BaseViewController, UICollectionViewDataSource, UICol
     // Impl UICollectionViewDelegateFlowLayout
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-             let width = (collectionView.bounds.size.width) / 3 - 7;
-            Log.print(TAG, msg: "resize cell size: \(width)")
+            
+//             let width = (collectionView.bounds.size.width) / 3 - 7;
+//            Log.print(TAG, msg: "resize cell size: \(widthCell)")
            
-            let height = width + 10;
+            let height = widthCell + 10;
 
-            return CGSize(width: width, height: width);
+            return CGSize(width: widthCell, height: height);
     }
     /// end UICollectionViewDelegateFlowLayout
     
@@ -121,6 +142,21 @@ class WordsViewController: BaseViewController, UICollectionViewDataSource, UICol
     }
     
     ////////
+    
+    func setWidthCell(){
+        if (UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Pad)
+        {
+            // Ipad
+            widthCell = (self.view.bounds.size.width) / 5 - 10;
+        }
+        else
+        {
+            // Iphone
+            widthCell = (self.view.bounds.size.width) / 3 - 7;
+        }
+        Log.print(TAG, msg: "resize cell size: \(collectionView.bounds.size.width) : \(widthCell)")
+
+    }
 
     
 }

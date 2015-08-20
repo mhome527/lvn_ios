@@ -30,6 +30,10 @@ struct TblVietEx {
         self.kind = kind
         self.img = img
         
+        if kind != 11 {
+            return
+        }
+        
         let start1 = "\u{1}"
         let end1 = "\u{2}"
         let start2 = "\u{3}"

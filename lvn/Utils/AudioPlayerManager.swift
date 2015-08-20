@@ -48,6 +48,9 @@ class AudioPlayerManager: NSObject, AVAudioPlayerDelegate {
         
         var error: NSError?
         self.listNames = listNames
+        
+        stopSound()
+        
         for name1 in listNames {
             var name:String = name1.stringByReplacingOccurrencesOfString(" ", withString: "")
             if !name.isEmpty && name != "" {
@@ -81,6 +84,11 @@ class AudioPlayerManager: NSObject, AVAudioPlayerDelegate {
         } else {
             isStop = true
         }
+    }
+    ///
+    func stopSound(){
+        listPlayer = []
+        isStop = true
     }
     
     // TH play ko nghe tieng, goi ham nay se dung duoc

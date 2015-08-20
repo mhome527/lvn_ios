@@ -37,6 +37,9 @@ class PhrasesViewController: BaseViewController, UITableViewDataSource, UITableV
         super.viewDidLoad()
 //        testData()
         indicatorView.startAnimating()
+        
+        tablePhrase.backgroundColor = UIColor.clearColor()
+        
 //        var mainImpl:MainImpl = MainImpl()
 //        mainImpl.loadJson()
         
@@ -101,7 +104,7 @@ class PhrasesViewController: BaseViewController, UITableViewDataSource, UITableV
 //        let entity = listData[indexPath.row]
 //        cell.setView(entity.viet, ot: entity.other)
         cell.setAttrView(entity.arrViet, ot: entity.arrOther)
-
+        cell.backgroundColor = UIColor.clearColor()
         return cell
     }
 

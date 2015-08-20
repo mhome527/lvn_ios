@@ -15,19 +15,22 @@ class NumberViewController: BaseViewController , UICollectionViewDelegateFlowLay
     var audioPlay: AudioPlayerManager!
     
     //controll
-    @IBOutlet var collectionNumber: UICollectionView!
-  
-    @IBOutlet weak var edtText: UITextField!{ didSet { edtText.delegate = self } }
-    @IBOutlet var lblText: UILabel!
+    @IBOutlet weak var collectionNumber: UICollectionView!
+//    @IBOutlet weak var edtText: UITextField!{ didSet { edtText.delegate = self } }
+//    @IBOutlet weak var lblText: UILabel!
+    var widthCell:CGFloat!
     
-    
+    @IBOutlet weak var edtText: UITextField!
+    @IBOutlet weak var lblText: UILabel!
     /////
     let ID_COLLECTION_CELL = "number_cell"
     var listNumber: NSArray!
+    var currCell:UICollectionViewCell!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setWidthCell()
         // Do any additional setup after loading the view.
         loadNumberData()
         collectionNumber.backgroundColor = UIColor(white: 1, alpha: 0.0)
@@ -36,15 +39,24 @@ class NumberViewController: BaseViewController , UICollectionViewDelegateFlowLay
         edtText.addTarget(self, action:"edtTextNumberChanged:", forControlEvents:UIControlEvents.EditingChanged)
         audioPlay = AudioPlayerManager()
         
-        //resize collectionView
+        //sửa kích thước của cell
         if let layout = collectionNumber.collectionViewLayout as? UICollectionViewFlowLayout {
             let itemWidth = (collectionNumber.bounds.width - 30) / 3.0
             let itemHeight = layout.itemSize.height
             layout.itemSize = CGSize(width: itemWidth, height: itemHeight)
+//            layout.minimumLineSpacing = 1
             layout.invalidateLayout()
         }
         
-
+        //////
+//        let layout:UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+////        layout.sectionInset = UIEdgeInsets(top:5,left:5,bottom:5,right:5)
+//        layout.minimumInteritemSpacing = 5
+//        layout.minimumLineSpacing = 5
+//        
+//        collectionNumber.collectionViewLayout = layout
+        
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -96,6 +108,15 @@ class NumberViewController: BaseViewController , UICollectionViewDelegateFlowLay
         let number = listNumber[indexPath.row] as! NSString
         let numberText = NumberText.convertNumberToChar(number.longLongValue)
         cell.setData(number as String, numberText: numberText)
+        
+        if indexPath.row == 0 {
+            currCell = cell
+            currCell?.layer.borderWidth = 2.0
+            currCell?.layer.borderColor = UIColor.yellowColor().CGColor
+            
+        }
+
+        
         //        cell.backgroundColor = UIColor(white: 1, alpha: 0.3)
 
         return cell
@@ -107,6 +128,17 @@ class NumberViewController: BaseViewController , UICollectionViewDelegateFlowLay
         Log.print(TAG, msg: "row selected: \(listNumber[indexPath.row])")
         let strNumber = listNumber[indexPath.row] as! NSString
         edtText.text = strNumber as String
+        
+        //highlight selected cell
+        if let cell = currCell {
+            currCell?.layer.borderWidth = 0
+            currCell?.layer.borderColor = UIColor.clearColor().CGColor
+        }
+        
+        currCell = collectionView.cellForItemAtIndexPath(indexPath)
+        currCell?.layer.borderWidth = 2.0
+        currCell?.layer.borderColor = UIColor.yellowColor().CGColor
+        ////
         
         let textNumber = NumberText.convertNumberToChar(strNumber.longLongValue)
         if !textNumber.isEmpty && textNumber != "" {
@@ -139,6 +171,16 @@ class NumberViewController: BaseViewController , UICollectionViewDelegateFlowLay
     }
     
     
+    // Impl UICollectionViewDelegateFlowLayout
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
+        sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+            
+            let height = widthCell;
+            
+            return CGSize(width: widthCell, height: widthCell);
+    }
+    /// end UICollectionViewDelegateFlowLayout
+    
     ///////
     
     func loadNumberData(){
@@ -156,6 +198,23 @@ class NumberViewController: BaseViewController , UICollectionViewDelegateFlowLay
 //        collectionNumber.resignFirstResponder()
         //Causes the view (or one of its embedded text fields) to resign the first responder status.
         view.endEditing(true)
+    }
+    
+    
+    func setWidthCell(){
+        if (UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Pad)
+        {
+            // Ipad
+            widthCell = (self.view.bounds.size.width) / 6 - 10;
+        }
+        else
+        {
+            // Iphone
+            widthCell = (self.view.bounds.size.width) / 3 - 7;
+        }
+//        Log.print(TAG, msg: "resize cell size: \(collectionView.bounds.size.width) : \(widthCell)")
+        
+        
     }
     
 

@@ -16,17 +16,17 @@ public class Utility{
             if let listV = listViet as? [TblVietJA] {
                 for entity in listV {
                     
-                    let attrViet = NSAttributedString(
-                        data: entity.vi.dataUsingEncoding(NSUnicodeStringEncoding, allowLossyConversion: true)!,
-                        options: [ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType],
-                        documentAttributes: nil,
-                        error: nil)
-                    
-                    let attrOther = NSAttributedString(
-                        data: entity.o1.dataUsingEncoding(NSUnicodeStringEncoding, allowLossyConversion: true)!,
-                        options: [ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType],
-                        documentAttributes: nil,
-                        error: nil)
+//                    let attrViet = NSAttributedString(
+//                        data: entity.vi.dataUsingEncoding(NSUnicodeStringEncoding, allowLossyConversion: true)!,
+//                        options: [ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType],
+//                        documentAttributes: nil,
+//                        error: nil)
+//                    
+//                    let attrOther = NSAttributedString(
+//                        data: entity.o1.dataUsingEncoding(NSUnicodeStringEncoding, allowLossyConversion: true)!,
+//                        options: [ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType],
+//                        documentAttributes: nil,
+//                        error: nil)
                     
                     let tbl = TblVietEx(viet: entity.vi, other: entity.o1, kind: Int(entity.kind), img: entity.img)
                     
@@ -39,17 +39,17 @@ public class Utility{
                 Log.print(TAG, msg: "KO list data: \(listV.count)")
                 for entity in listV {
                     
-                    let attrViet = NSAttributedString(
-                        data: entity.vi.dataUsingEncoding(NSUnicodeStringEncoding, allowLossyConversion: true)!,
-                        options: [ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType],
-                        documentAttributes: nil,
-                        error: nil)
-                    
-                    let attrOther = NSAttributedString(
-                        data: entity.o1.dataUsingEncoding(NSUnicodeStringEncoding, allowLossyConversion: true)!,
-                        options: [ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType],
-                        documentAttributes: nil,
-                        error: nil)
+//                    let attrViet = NSAttributedString(
+//                        data: entity.vi.dataUsingEncoding(NSUnicodeStringEncoding, allowLossyConversion: true)!,
+//                        options: [ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType],
+//                        documentAttributes: nil,
+//                        error: nil)
+//                    
+//                    let attrOther = NSAttributedString(
+//                        data: entity.o1.dataUsingEncoding(NSUnicodeStringEncoding, allowLossyConversion: true)!,
+//                        options: [ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType],
+//                        documentAttributes: nil,
+//                        error: nil)
                     
                     let tbl = TblVietEx( viet: entity.vi, other: entity.o1, kind: Int(entity.kind), img: entity.img)
                     
@@ -62,17 +62,17 @@ public class Utility{
                 Log.print(TAG, msg: "FR list data: \(listV.count)")
                 for entity in listV {
                     
-                    let attrViet = NSAttributedString(
-                        data: entity.vi.dataUsingEncoding(NSUnicodeStringEncoding, allowLossyConversion: true)!,
-                        options: [ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType],
-                        documentAttributes: nil,
-                        error: nil)
-                    
-                    let attrOther = NSAttributedString(
-                        data: entity.o1.dataUsingEncoding(NSUnicodeStringEncoding, allowLossyConversion: true)!,
-                        options: [ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType],
-                        documentAttributes: nil,
-                        error: nil)
+//                    let attrViet = NSAttributedString(
+//                        data: entity.vi.dataUsingEncoding(NSUnicodeStringEncoding, allowLossyConversion: true)!,
+//                        options: [ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType],
+//                        documentAttributes: nil,
+//                        error: nil)
+//                    
+//                    let attrOther = NSAttributedString(
+//                        data: entity.o1.dataUsingEncoding(NSUnicodeStringEncoding, allowLossyConversion: true)!,
+//                        options: [ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType],
+//                        documentAttributes: nil,
+//                        error: nil)
                     
                     let tbl = TblVietEx( viet: entity.vi, other: entity.o1, kind: Int(entity.kind), img: entity.img)
                     
@@ -84,17 +84,17 @@ public class Utility{
                 Log.print(TAG, msg: "RU list data: \(listV.count)")
                 for entity in listV {
                     
-                    let attrViet = NSAttributedString(
-                        data: entity.vi.dataUsingEncoding(NSUnicodeStringEncoding, allowLossyConversion: true)!,
-                        options: [ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType],
-                        documentAttributes: nil,
-                        error: nil)
-                    
-                    let attrOther = NSAttributedString(
-                        data: entity.o1.dataUsingEncoding(NSUnicodeStringEncoding, allowLossyConversion: true)!,
-                        options: [ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType],
-                        documentAttributes: nil,
-                        error: nil)
+//                    let attrViet = NSAttributedString(
+//                        data: entity.vi.dataUsingEncoding(NSUnicodeStringEncoding, allowLossyConversion: true)!,
+//                        options: [ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType],
+//                        documentAttributes: nil,
+//                        error: nil)
+//                    
+//                    let attrOther = NSAttributedString(
+//                        data: entity.o1.dataUsingEncoding(NSUnicodeStringEncoding, allowLossyConversion: true)!,
+//                        options: [ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType],
+//                        documentAttributes: nil,
+//                        error: nil)
                     
                     let tbl = TblVietEx( viet: entity.vi, other: entity.o1, kind: Int(entity.kind), img: entity.img)
                     

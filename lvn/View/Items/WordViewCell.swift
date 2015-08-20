@@ -10,8 +10,9 @@ import UIKit
 
 class WordViewCell : UICollectionViewCell{
     let TAG = "WordViewCell"
-    @IBOutlet var imgWord: UIImageView!
-    @IBOutlet var lblWord: UILabel!
+    
+    @IBOutlet weak var imgWord: UIImageView!
+    @IBOutlet weak var lblWord: UILabel!
     
     func setData(img: String, text: String){
         

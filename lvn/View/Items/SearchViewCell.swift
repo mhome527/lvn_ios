@@ -25,17 +25,22 @@ class SearchViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func setData(vi: String, o1: String, img: String){
-        if let img = UIImage(named: "images/\(img).png") {
+    func setData(entity: TblVietEx){
+        if let img = UIImage(named: "images/\(entity.img).png") {
             //            img.alpha(0.5)
             imgView.image = img
             imgView?.hidden = false
         }else{
             imgView?.hidden = true
         }
-        lblViet.text = vi
-        lblOther.text = o1
-
+        
+        if entity.kind == 11 {
+            lblViet.attributedText = entity.arrViet
+            lblOther.attributedText = entity.arrOther
+        }else {
+            lblViet.text = entity.viet
+            lblOther.text = entity.other
+        }
     }
-
+    
 }

@@ -14,9 +14,14 @@ class AlphabetViewController: BaseViewController, UICollectionViewDelegateFlowLa
     let ID_COLLECTION_CELL = "alphabet_cell"
     var listAlphabet: NSArray!
     var audioPlay: AudioPlayerManager!
+    var currCell:UICollectionViewCell!
+    var widthCell:CGFloat!
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setWidthCell()
+        
         collectionAlphabet.backgroundColor = UIColor(white: 1, alpha: 0)
 
         // Do any additional setup after loading the view.
@@ -43,6 +48,14 @@ class AlphabetViewController: BaseViewController, UICollectionViewDelegateFlowLa
         var cell = collectionView.dequeueReusableCellWithReuseIdentifier(ID_COLLECTION_CELL, forIndexPath: indexPath) as! AlphabetViewCell
         let alphabet = listAlphabet[indexPath.row] as! String
         cell.setData(alphabet)
+        
+         //highlight cell
+        if indexPath.row == 0 {
+            currCell = cell
+            currCell?.layer.borderWidth = 2.0
+            currCell?.layer.borderColor = UIColor.yellowColor().CGColor
+            
+        }
 //        cell.backgroundColor = UIColor(white: 1, alpha: 0.3)
 
         return cell
@@ -60,11 +73,47 @@ class AlphabetViewController: BaseViewController, UICollectionViewDelegateFlowLa
     // Impl UICollectionViewDataSource
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath){
         let alphabet = listAlphabet[indexPath.row] as! String
+        
+        //highlight selected cell
+        if let cell = currCell {
+            currCell?.layer.borderWidth = 0
+            currCell?.layer.borderColor = UIColor.clearColor().CGColor
+        }
+        
+        currCell = collectionView.cellForItemAtIndexPath(indexPath)
+        currCell?.layer.borderWidth = 2.0
+        currCell?.layer.borderColor = UIColor.yellowColor().CGColor
+        ////
+        
+        
         audioPlay.setFileNameStr(alphabet)
         audioPlay.playSound()
     }
     // end UICollectionViewDataSource
     
+    // Impl UICollectionViewDelegateFlowLayout
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
+        sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+            
+        return CGSize(width: widthCell, height: widthCell);
+    }
+    /// end UICollectionViewDelegateFlowLayout
+    
+    
+    func setWidthCell(){
+        if (UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Pad)
+        {
+            // Ipad
+            widthCell = (self.view.bounds.size.width) / 5 - 10;
+        }
+        else
+        {
+            // Iphone
+            widthCell = (self.view.bounds.size.width) / 3 - 7;
+        }
+        
+    }
+
 }
 
 

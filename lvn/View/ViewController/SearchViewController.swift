@@ -25,6 +25,7 @@ class SearchViewController: BaseViewController , UITableViewDataSource, UITableV
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        tableSearch.backgroundColor = UIColor.clearColor()
         searchImpl = SearchImpl(lang: lang, viewDelegate: self)
         searchImpl.loadData()
         
@@ -93,11 +94,12 @@ class SearchViewController: BaseViewController , UITableViewDataSource, UITableV
         {
             entity = self.listData[indexPath.row]
         }
-        //        let entity = listData[indexPath.row]
-        //        cell.setView(entity.viet, ot: entity.other)
-//        cell.setAttrView(entity.arrViet, ot: entity.arrOther)
-//        cell.setData(<#vi: String#>, o1: <#String#>, img: <#String#>)
-        cell.setData(entity.viet, o1: entity.other, img: entity.img)
+
+      
+       
+        cell.setData(entity)
+      
+        cell.backgroundColor = UIColor.clearColor()
 //        tableSearch.rowHeight = 160
         return cell
     }

@@ -10,9 +10,11 @@ import UIKit
 
 class NumberViewCell: UICollectionViewCell {
 
+//    @IBOutlet weak var numberLabel: UILabel!
+//    @IBOutlet weak var textLabel: UILabel!
     @IBOutlet weak var numberLabel: UILabel!
-    
     @IBOutlet weak var textLabel: UILabel!
+    
     func setData(word: String, numberText: String){
         numberLabel.text = word
         textLabel.text = numberText

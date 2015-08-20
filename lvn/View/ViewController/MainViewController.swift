@@ -8,7 +8,8 @@
 
 import UIKit
 
-class MainViewController: BaseViewController, UIActionSheetDelegate {
+class MainViewController: BaseViewController{
+//    , UIActionSheetDelegate 
 
     let TAG  = "MainViewController"
 //    var mainImpl:MainImpl!
@@ -109,32 +110,39 @@ class MainViewController: BaseViewController, UIActionSheetDelegate {
     }
     
     /////// Impl UIActionSheetDelegate
-    func actionSheet(actionSheet: UIActionSheet, clickedButtonAtIndex buttonIndex: Int){
-        if( buttonIndex == 2){
-            self.lang = "JA"
-             println("Ja")
-        }
-        if( buttonIndex == 3){
-            self.lang = "KO"
-             println("Ko")
-        }
-        if( buttonIndex == 4){
-            self.lang = "FR"
-            println("Fr")
-        }
-        if( buttonIndex == 5){
-            self.lang = "RU"
-             println("Ru")
-        }
-        else{
-            self.lang = "EN"
-             println("E")
-        }
-    }
+//    func actionSheet(actionSheet: UIActionSheet, clickedButtonAtIndex buttonIndex: Int){
+//        if( buttonIndex == 2){
+//            self.lang = "JA"
+//             println("Ja")
+//        }
+//        if( buttonIndex == 3){
+//            self.lang = "KO"
+//             println("Ko")
+//        }
+//        if( buttonIndex == 4){
+//            self.lang = "FR"
+//            println("Fr")
+//        }
+//        if( buttonIndex == 5){
+//            self.lang = "RU"
+//             println("Ru")
+//        }
+//        else{
+//            self.lang = "EN"
+//             println("E")
+//        }
+//    }
     /////// end UIActionSheetDelegate
     
     func showDialogIOS8(){
         let optionMenu = UIAlertController(title: nil, message: "Language", preferredStyle: .ActionSheet)
+        
+        
+        optionMenu.popoverPresentationController!.sourceView = self.view
+        optionMenu.popoverPresentationController!.sourceRect = CGRectMake(self.view.bounds.size.width, self.view.bounds.size.height, 1.0, 1.0)
+        // this is the center of the screen currently but it can be any point in the view
+        
+//        self.presentViewController(optionMenu, animated: true, completion: nil)
         
         let optionVE = UIAlertAction(title: "V-E", style: .Default, handler: {
             (alert: UIAlertAction!) -> Void in
