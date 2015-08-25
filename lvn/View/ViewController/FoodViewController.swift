@@ -26,9 +26,12 @@ class FoodViewController: BaseViewController, UICollectionViewDataSource, UIColl
     var audioPlay: AudioPlayerManager!
     var listData: [TblVietEx]!
     var currCell:UICollectionViewCell!
-    
+    var widthCell:CGFloat!
+    var currImg:String = ""
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        setWidthCell()
         
         collectionView.backgroundColor = UIColor(white: 1, alpha: 0.0)
 
@@ -75,12 +78,16 @@ class FoodViewController: BaseViewController, UICollectionViewDataSource, UIColl
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(ID_CELL, forIndexPath: indexPath) as! FoodViewCell
 //        cell.imgFood.image = UIImage(named: pageImages[indexPath.row])
         cell.imgFood.image = UIImage(named: "images/\(listData[indexPath.row].img).png")
-        if indexPath.row == 0 {
-            currCell = cell
-            cell.layer.borderWidth = 2.0
-            cell.layer.borderColor = UIColor.yellowColor().CGColor
+        
+        if currImg == "" || cell.imgFood != currImg{
+            currCell?.layer.borderWidth = 0
+            currCell?.layer.borderColor = UIColor.clearColor().CGColor
+        }else{
+            currCell.layer.borderWidth = 2.0
+            currCell.layer.borderColor = UIColor.yellowColor().CGColor
 
         }
+        
         return cell
     }
     
@@ -95,9 +102,13 @@ class FoodViewController: BaseViewController, UICollectionViewDataSource, UIColl
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath){
         Log.print(TAG, msg: "row selected: \(indexPath.row + 1)")
         let item = listData[indexPath.row];
+        currImg = listData[indexPath.row].img
         imgShow.image =  UIImage(named: "images/f_\(listData[indexPath.row].img)_l.png")
         lblFood.text = item.viet
-        
+
+        audioPlay.setFileNameStr(item.viet)
+        audioPlay.playSound()
+
         //highlight selected cell
         if let cell = currCell {
             currCell?.layer.borderWidth = 0
@@ -107,18 +118,19 @@ class FoodViewController: BaseViewController, UICollectionViewDataSource, UIColl
         currCell = collectionView.cellForItemAtIndexPath(indexPath)
         currCell?.layer.borderWidth = 2.0
         currCell?.layer.borderColor = UIColor.yellowColor().CGColor
-        ////
+        
+             ////
     }
     // end CollectionViewDelegate
     
     // Impl UICollectionViewDelegateFlowLayout
-//    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
-//        sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-//            let width = 100
-//            let height = width
-//            
-//            return CGSize(width: width, height: width);
-//    }
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
+        sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+
+            let height = widthCell - 15
+            
+            return CGSize(width: widthCell, height: height);
+    }
     /// end UICollectionViewDelegateFlowLayout
     
     @IBAction func eventSound(sender: AnyObject) {
@@ -127,12 +139,6 @@ class FoodViewController: BaseViewController, UICollectionViewDataSource, UIColl
     }
     
     ////
-    func setConstrainsView(){
-        var constH:NSLayoutConstraint = NSLayoutConstraint(item: imgShow, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: imgShow, attribute: NSLayoutAttribute.Height, multiplier: 1, constant: 200);
-
-       imgShow.addConstraint(constH)
-        
-    }
     
     func resizeImage(image: UIImage) -> UIImage {
         
@@ -145,6 +151,22 @@ class FoodViewController: BaseViewController, UICollectionViewDataSource, UIColl
         
         return newImage
     }
+    
+    func setWidthCell(){
+        if (UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Pad)
+        {
+            // Ipad
+            widthCell = (self.view.bounds.size.width) / 5 - 10;
+        }
+        else
+        {
+            // Iphone
+            widthCell = (self.view.bounds.size.width) / 3 - 20;
+        }
+        Log.print(TAG, msg: "resize cell size: \(collectionView.bounds.size.width) : \(widthCell)")
+        
+    }
+
 }
 
 

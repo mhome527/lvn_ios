@@ -19,9 +19,10 @@ class WordsViewController: BaseViewController, UICollectionViewDataSource, UICol
     var type_Kind: Int = 1
     var widthCell:CGFloat!
     var currCell:UICollectionViewCell!
+    var currImg:String = ""
+
     
     @IBOutlet weak var collectionView: UICollectionView!
-    
     @IBOutlet weak var lblWord: UILabel!
     
     ///////
@@ -52,12 +53,14 @@ class WordsViewController: BaseViewController, UICollectionViewDataSource, UICol
     }
     
 
-    @IBAction func speakWord(sender: AnyObject) {
-        Log.print(TAG, msg: "speak:")
-        audioPlay.setFileName(["d1en","d1ie62n","d1u5ng"])
-        audioPlay.playSound()
-    }
-    
+//    @IBAction func speakWord(sender: AnyObject) {
+//        let words = listData[lblWord.tag].viet
+//        Log.print(TAG, msg: "speak: \(words)")
+//        
+//        audioPlay.setFileNameStr(words)
+//        audioPlay.playSound()
+//    }
+//    
     
 
     //impl WordsViewDelegate
@@ -65,6 +68,7 @@ class WordsViewController: BaseViewController, UICollectionViewDataSource, UICol
         Log.print(TAG, msg: "loadWords count: \(listData.count)")
         self.listData = listData
         lblWord.text = "\(listData[0].viet) : \(listData[0].other)"
+        lblWord.tag = 0
         collectionView.reloadData()
 //        dispatch_async(dispatch_get_main_queue(), {
 //            self.collectionVIew.reloadData
@@ -86,12 +90,23 @@ class WordsViewController: BaseViewController, UICollectionViewDataSource, UICol
 //        Log.print(TAG, msg: "collection cell....")
         var cell = collectionView.dequeueReusableCellWithReuseIdentifier(ID_WORD_CELL, forIndexPath: indexPath) as! WordViewCell
         
-        if indexPath.row == 0 {
-            currCell = cell
-            currCell?.layer.borderWidth = 2.0
-            currCell?.layer.borderColor = UIColor.yellowColor().CGColor
-
+//        if indexPath.row == 0 {
+//            currCell = cell
+//            currCell?.layer.borderWidth = 2.0
+//            currCell?.layer.borderColor = UIColor.yellowColor().CGColor
+//
+//        }
+        
+        
+        if currImg == "" || cell.imgWord != currImg{
+            currCell?.layer.borderWidth = 0
+            currCell?.layer.borderColor = UIColor.clearColor().CGColor
+        }else{
+            currCell.layer.borderWidth = 2.0
+            currCell.layer.borderColor = UIColor.yellowColor().CGColor
+            
         }
+        
         cell.setData(listData[indexPath.row].img, text: listData[indexPath.row].viet)
         return cell
     
@@ -104,8 +119,10 @@ class WordsViewController: BaseViewController, UICollectionViewDataSource, UICol
     // Impl UICollectionViewDataSource
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath){
         let words = listData[indexPath.row].viet
-        lblWord.text = "\(listData[indexPath.row].viet) : \(listData[indexPath.row].other)"
+        currImg = listData[indexPath.row].img
         
+        lblWord.text = "\(listData[indexPath.row].viet) : \(listData[indexPath.row].other)"
+        lblWord.tag = indexPath.row
         //highlight selected cell
         if let cell = currCell {
             currCell?.layer.borderWidth = 0
@@ -137,7 +154,8 @@ class WordsViewController: BaseViewController, UICollectionViewDataSource, UICol
     /// end UICollectionViewDelegateFlowLayout
     
     @IBAction func tappedSpeak(sender: AnyObject) {
-        audioPlay.setFileNameStr(lblWord.text!)
+        let words = listData[lblWord.tag].viet
+        audioPlay.setFileNameStr(words)
         audioPlay.playSound()
     }
     
@@ -152,7 +170,7 @@ class WordsViewController: BaseViewController, UICollectionViewDataSource, UICol
         else
         {
             // Iphone
-            widthCell = (self.view.bounds.size.width) / 3 - 7;
+            widthCell = (self.view.bounds.size.width) / 3 - 10;
         }
         Log.print(TAG, msg: "resize cell size: \(collectionView.bounds.size.width) : \(widthCell)")
 

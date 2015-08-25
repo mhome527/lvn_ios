@@ -20,7 +20,7 @@ class PhrasesViewController: BaseViewController, UITableViewDataSource, UITableV
     
 //    @IBOutlet var tablePhrase: UITableView!
     
-    @IBOutlet var tablePhrase: UITableView!
+    @IBOutlet weak var tablePhrase: UITableView!
     @IBOutlet var indicatorView: UIActivityIndicatorView!
     
     //////
@@ -167,23 +167,19 @@ class PhrasesViewController: BaseViewController, UITableViewDataSource, UITableV
             
 
             var categoryMatch = (scope == "All")
-            var search = searchText.lowercaseString
+            var search = searchText.lowercaseString.stringByReplacingOccurrencesOfString("đ", withString: "d")
             
             var text1 = tblViet.viet.stringByFoldingWithOptions(NSStringCompareOptions.DiacriticInsensitiveSearch, locale: NSLocale.currentLocale())
             var text2 = tblViet.other.stringByFoldingWithOptions(NSStringCompareOptions.DiacriticInsensitiveSearch, locale: NSLocale.currentLocale())
+             text1 = text1.lowercaseString.stringByReplacingOccurrencesOfString("đ", withString: "d")
             
+            if tblViet.kind == 11 {
             
-            text1 = text1.lowercaseString.stringByReplacingOccurrencesOfString("\u{1}", withString: "").stringByReplacingOccurrencesOfString("\u{2}", withString: "").stringByReplacingOccurrencesOfString("\u{3}", withString: "").stringByReplacingOccurrencesOfString("\u{4}", withString: "")
+                text1 = text1.stringByReplacingOccurrencesOfString("\u{1}", withString: "").stringByReplacingOccurrencesOfString("\u{2}", withString: "").stringByReplacingOccurrencesOfString("\u{3}", withString: "").stringByReplacingOccurrencesOfString("\u{4}", withString: "")
             
+                text2 = text2.lowercaseString.stringByReplacingOccurrencesOfString("\u{1}", withString: "").stringByReplacingOccurrencesOfString("\u{2}", withString: "").stringByReplacingOccurrencesOfString("\u{3}", withString: "").stringByReplacingOccurrencesOfString("\u{4}", withString: "")
             
-            //            text1 = text1.lowercaseString.stringByReplacingOccurrencesOfString("đ", withString: "d")
-            
-            
-            
-            text2 = text2.lowercaseString.stringByReplacingOccurrencesOfString("\u{1}", withString: "").stringByReplacingOccurrencesOfString("\u{2}", withString: "").stringByReplacingOccurrencesOfString("\u{3}", withString: "").stringByReplacingOccurrencesOfString("\u{4}", withString: "")
-            
-            
-            //            text2 = text2.lowercaseString.stringByReplacingOccurrencesOfString("đ", withString: "d")
+            }
             
             var stringMatch = text1.rangeOfString(search)
             var stringMatch2 = text2.rangeOfString(search)

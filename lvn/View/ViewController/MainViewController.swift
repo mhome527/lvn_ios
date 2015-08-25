@@ -66,17 +66,18 @@ class MainViewController: BaseViewController{
     }
     
     
-    @IBAction func actionAlphabet(sender: AnyObject) {
-        let vc = AlphabetViewController(nibName: ID_STORYBOARD_ALPHABET, bundle: nil)
-        navigationController?.pushViewController(vc, animated: true)
-    }
+//    @IBAction func actionAlphabet(sender: AnyObject) {
+//        let vc = AlphabetViewController(nibName: ID_STORYBOARD_ALPHABET, bundle: nil)
+//        navigationController?.pushViewController(vc, animated: true)
+//    }
+//    
+//    
+//    @IBAction func actionNumber(sender: AnyObject) {
+//        let vc = NumberViewController(nibName: ID_STORYBOARD_NUMBER, bundle: nil)
+//        navigationController?.pushViewController(vc, animated: true)
+//
+//    }
     
-    
-    @IBAction func actionNumber(sender: AnyObject) {
-        let vc = NumberViewController(nibName: ID_STORYBOARD_NUMBER, bundle: nil)
-        navigationController?.pushViewController(vc, animated: true)
-
-    }
     
     @IBAction func actionAnimal(sender: AnyObject) {
         self.performSegueWithIdentifier(ID_ACTION_WORDS, sender: 4)
@@ -85,6 +86,7 @@ class MainViewController: BaseViewController{
     }
     
     
+   
     @IBAction func actionFruit(sender: AnyObject) {
         self.performSegueWithIdentifier(ID_ACTION_WORDS, sender: 2)
         Log.print(TAG, msg:"actionFruit")
@@ -98,7 +100,7 @@ class MainViewController: BaseViewController{
 
     }
     
-    
+
     @IBAction func actionSetting(sender: AnyObject) {
         if Utility.controllerAvailable("UIAlertController"){
             showDialogIOS8()
@@ -138,12 +140,23 @@ class MainViewController: BaseViewController{
         let optionMenu = UIAlertController(title: nil, message: "Language", preferredStyle: .ActionSheet)
         
         
-        optionMenu.popoverPresentationController!.sourceView = self.view
-        optionMenu.popoverPresentationController!.sourceRect = CGRectMake(self.view.bounds.size.width, self.view.bounds.size.height, 1.0, 1.0)
+//        optionMenu.popoverPresentationController!.sourceView = self.view
+//        optionMenu.popoverPresentationController!.sourceRect = CGRectMake(self.view.bounds.size.width, self.view.bounds.size.height, 1.0, 1.0)
+        if let popover = optionMenu.popoverPresentationController {
+            popover.sourceView = self.view
+            popover.sourceRect = CGRectMake(self.view.bounds.size.width, self.view.bounds.size.height, 1.0, 1.0)
+        }
+//        optionMenu.popoverPresentationController!.sourceView = self.view
+//        optionMenu.popoverPresentationController!.sourceRect = CGRectMake(self.view.bounds.size.width, self.view.bounds.size.height, 1.0, 1.0)
         // this is the center of the screen currently but it can be any point in the view
         
 //        self.presentViewController(optionMenu, animated: true, completion: nil)
         
+        
+//               popOver?.permittedArrowDirections = UIPopoverArrowDirection.Any
+        
+        
+        /////////
         let optionVE = UIAlertAction(title: "V-E", style: .Default, handler: {
             (alert: UIAlertAction!) -> Void in
              self.lang = "EN"

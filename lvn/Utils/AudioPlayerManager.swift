@@ -38,7 +38,7 @@ class AudioPlayerManager: NSObject, AVAudioPlayerDelegate {
     /// end AVAudioPlayerDelegate
     
     func setFileNameStr(filename: String){
-        setFileName(filename.componentsSeparatedByString(" "))
+         setFileName(filename.componentsSeparatedByString(" "))
     }
     
     func setFileName(listNames:[String]){
