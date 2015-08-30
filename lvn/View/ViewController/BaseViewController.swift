@@ -10,16 +10,32 @@ import UIKit
 
 class BaseViewController: UIViewController {
     
+    let TAG_BASE = "BaseViewController"
     var delegateView: BaseViewDelegate!
     var lang:String = "EN"
     var color_type = "blue" //1: blue; 2: pink; 3: green
     var gradient: CAGradientLayer!
     
     override func viewDidLoad() {
-//        super.viewDidLoad()
+        super.viewDidLoad()
         
         if let langTmp: AnyObject = Utility.getObj(Constant.KEY_LANGUAGE) {
             lang = langTmp as! String
+        }else{
+            if let preferredLanguage = NSLocale.preferredLanguages()[0] as? String {
+                if preferredLanguage.lowercaseString == "ja" {
+                    lang = "JA"
+                }else if preferredLanguage.lowercaseString == "ko" {
+                    lang = "KO"
+                }else if preferredLanguage.lowercaseString == "fr" {
+                     lang = "FR"
+                }else if preferredLanguage.lowercaseString == "ru" {
+                     lang = "RU"
+                }else{
+                    lang = "EN"
+                }
+                Log.print(TAG_BASE, msg: "lang IOS: \(lang)")
+            }
         }
         
         Log.print("BaseView", msg: "lang: \(lang)")

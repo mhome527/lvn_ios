@@ -70,6 +70,11 @@ struct TblVietEx {
         arrViet.addAttribute(NSForegroundColorAttributeName, value: UIColor.greenColor(), range: NSRange(location:valueStart2,length:valueEnd2 - valueStart2))
         
         ///
+        valueStart1 = 0
+        valueEnd1 = 0
+        valueStart2 = 0
+        valueEnd2 = 0
+        
         if var rangeS1 = other.rangeOfString(start1){
             valueStart1 = distance(other.startIndex, rangeS1.startIndex)
             
@@ -89,10 +94,13 @@ struct TblVietEx {
         
         arrOther = NSMutableAttributedString(string: other, attributes: [NSFontAttributeName:UIFont(name: "Georgia", size: 16.0)!])
         
-        arrOther.addAttribute(NSForegroundColorAttributeName, value: UIColor.redColor(), range: NSRange(location:valueStart1,length:valueEnd1 - valueStart1))
+        if valueEnd1 > 0 {
+            arrOther.addAttribute(NSForegroundColorAttributeName, value: UIColor.redColor(), range: NSRange(location:valueStart1,length:valueEnd1 - valueStart1))
+        }
         
-        arrOther.addAttribute(NSForegroundColorAttributeName, value: UIColor.greenColor(), range: NSRange(location:valueStart2,length:valueEnd2 - valueStart2))
-
+        if valueEnd2 > 0 {
+            arrOther.addAttribute(NSForegroundColorAttributeName, value: UIColor.greenColor(), range: NSRange(location:valueStart2,length:valueEnd2 - valueStart2))
+        }
         
         
 //        arrOther = myMutableString

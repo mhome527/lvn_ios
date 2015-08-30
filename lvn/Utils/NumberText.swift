@@ -91,7 +91,7 @@ class NumberText{
             }
             hauto = " tỷ";
         } while (so > 0);
-        return chuoi;
+        return chuoi
     }
 
 }

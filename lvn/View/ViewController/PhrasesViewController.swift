@@ -118,21 +118,27 @@ class PhrasesViewController: BaseViewController, UITableViewDataSource, UITableV
     }
 
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath){
-        var vn:String = self.listData[indexPath.row].viet
+        var vn:String
+        if (tableView == self.searchDisplayController?.searchResultsTableView) {
+            vn = self.filteredData[indexPath.row].viet
+        }else {
+            vn = self.listData[indexPath.row].viet
+        }
+        
         vn = vn.stringByReplacingOccurrencesOfString("\u{1}", withString: "").stringByReplacingOccurrencesOfString("\u{2}", withString: "").stringByReplacingOccurrencesOfString("\u{3}", withString: "").stringByReplacingOccurrencesOfString("\u{4}", withString: "")
         
-        vn = vn.stringByReplacingOccurrencesOfString("?", withString: "").stringByReplacingOccurrencesOfString("!", withString: "").stringByReplacingOccurrencesOfString(".", withString: "")
+        vn = vn.stringByReplacingOccurrencesOfString("?", withString: "").stringByReplacingOccurrencesOfString("!", withString: "").stringByReplacingOccurrencesOfString(".", withString: "").stringByReplacingOccurrencesOfString(",", withString: "")
         audioPlay.setFileNameStr(vn)
         audioPlay.playSound()
 
     }
     
     func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 80
+        return 65
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat{
-        return 80
+        return 65
     }
 
     //// end

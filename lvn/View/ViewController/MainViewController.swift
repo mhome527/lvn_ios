@@ -19,15 +19,19 @@ class MainViewController: BaseViewController{
     let ID_ACTION_WORDS = "id_words"
     let ID_ACTION_TRANSLATE = "id_translate"
 
+    @IBOutlet weak var imgFlag: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-// create and insert table
+// create and insert table (not release)
         if Constant.IS_CREATE_DB == true {
             let mainImpl = MainImpl()
             mainImpl.loadJson()
+            mainImpl.loadRecJson()
         }
+         setFlagImage()
+       
     }
 
     override func didReceiveMemoryWarning() {
@@ -63,20 +67,8 @@ class MainViewController: BaseViewController{
         Utility.saveObj(Constant.KEY_COLOR, entity: color_type)
 
         chaneBackground()
+       
     }
-    
-    
-//    @IBAction func actionAlphabet(sender: AnyObject) {
-//        let vc = AlphabetViewController(nibName: ID_STORYBOARD_ALPHABET, bundle: nil)
-//        navigationController?.pushViewController(vc, animated: true)
-//    }
-//    
-//    
-//    @IBAction func actionNumber(sender: AnyObject) {
-//        let vc = NumberViewController(nibName: ID_STORYBOARD_NUMBER, bundle: nil)
-//        navigationController?.pushViewController(vc, animated: true)
-//
-//    }
     
     
     @IBAction func actionAnimal(sender: AnyObject) {
@@ -107,93 +99,77 @@ class MainViewController: BaseViewController{
         }else{
             showDialogIOS7()
         }
-
         
     }
-    
-    /////// Impl UIActionSheetDelegate
-//    func actionSheet(actionSheet: UIActionSheet, clickedButtonAtIndex buttonIndex: Int){
-//        if( buttonIndex == 2){
-//            self.lang = "JA"
-//             println("Ja")
-//        }
-//        if( buttonIndex == 3){
-//            self.lang = "KO"
-//             println("Ko")
-//        }
-//        if( buttonIndex == 4){
-//            self.lang = "FR"
-//            println("Fr")
-//        }
-//        if( buttonIndex == 5){
-//            self.lang = "RU"
-//             println("Ru")
-//        }
-//        else{
-//            self.lang = "EN"
-//             println("E")
-//        }
-//    }
-    /////// end UIActionSheetDelegate
+
     
     func showDialogIOS8(){
         let optionMenu = UIAlertController(title: nil, message: "Language", preferredStyle: .ActionSheet)
-        
-        
-//        optionMenu.popoverPresentationController!.sourceView = self.view
-//        optionMenu.popoverPresentationController!.sourceRect = CGRectMake(self.view.bounds.size.width, self.view.bounds.size.height, 1.0, 1.0)
+
         if let popover = optionMenu.popoverPresentationController {
             popover.sourceView = self.view
             popover.sourceRect = CGRectMake(self.view.bounds.size.width, self.view.bounds.size.height, 1.0, 1.0)
         }
-//        optionMenu.popoverPresentationController!.sourceView = self.view
-//        optionMenu.popoverPresentationController!.sourceRect = CGRectMake(self.view.bounds.size.width, self.view.bounds.size.height, 1.0, 1.0)
-        // this is the center of the screen currently but it can be any point in the view
+
+        var VE:String = "Vietnamese - English"
+        var VJ:String = "ベトナム語 - 日本語"
+        var VK:String = "베트남의 - 한국어"
+        var VF:String = "Vietnamien - français"
+        var VR:String = "вьетнамцы - русский"
+
         
-//        self.presentViewController(optionMenu, animated: true, completion: nil)
-        
-        
-//               popOver?.permittedArrowDirections = UIPopoverArrowDirection.Any
-        
+        if lang == "JA" {
+            VJ = "\(VJ) (*)"
+        }else if lang == "KO" {
+            VK = "\(VK) (*)"
+        }else if lang == "FR" {
+            VF = "\(VF) (*)"
+        }else if lang == "RU" {
+            VR = "\(VR) (*)"
+        }else {
+            VE = "\(VE) (*)"
+        }
         
         /////////
-        let optionVE = UIAlertAction(title: "V-E", style: .Default, handler: {
+        let optionVE = UIAlertAction(title: VE, style: .Default, handler: {
             (alert: UIAlertAction!) -> Void in
-             self.lang = "EN"
+            self.lang = "EN"
             Utility.saveObj(Constant.KEY_LANGUAGE, entity: self.lang)
-
-             Log.print(self.TAG, msg:"E")
+            self.setFlagImage()
+            Log.print(self.TAG, msg:"E")
             
         })
         
-        let optionVJ = UIAlertAction(title: "V-J", style: .Default, handler: {
+        let optionVJ = UIAlertAction(title: VJ, style: .Default, handler: {
             (alert: UIAlertAction!) -> Void in
             Log.print(self.TAG, msg:"J")
             self.lang = "JA"
             Utility.saveObj(Constant.KEY_LANGUAGE, entity: self.lang)
-
+            self.setFlagImage()
         })
         
-        let optionVK = UIAlertAction(title: "V-K", style: .Default, handler: {
+        let optionVK = UIAlertAction(title: VK, style: .Default, handler: {
             (alert: UIAlertAction!) -> Void in
             println("K")
             self.lang = "KO"
             Utility.saveObj(Constant.KEY_LANGUAGE, entity: self.lang)
-
+             self.setFlagImage()
         })
         
-        let optionVF = UIAlertAction(title: "V-F", style: .Default, handler: {
+        let optionVF = UIAlertAction(title: VF, style: .Default, handler: {
             (alert: UIAlertAction!) -> Void in
             println("F")
             self.lang = "FR"
             Utility.saveObj(Constant.KEY_LANGUAGE, entity: self.lang)
+             self.setFlagImage()
         })
         
-        let optionVR = UIAlertAction(title: "V-R", style: .Default, handler: {
+        let optionVR = UIAlertAction(title: VR, style: .Default, handler: {
             (alert: UIAlertAction!) -> Void in
             println("R")
-            self.lang = "VR"
+            self.lang = "RU"
             Utility.saveObj(Constant.KEY_LANGUAGE, entity: self.lang)
+             self.setFlagImage()
         })
         
         let optionCancel = UIAlertAction(title: "Cancel", style: .Cancel, handler: {
@@ -215,6 +191,27 @@ class MainViewController: BaseViewController{
     }
 
     func showDialogIOS7(){
+        
+        var VE:String = "Vietnamese - English"
+        var VJ:String = "ベトナム語 - 日本語"
+        var VK:String = "베트남의 - 한국어"
+        var VF:String = "Vietnamien - français"
+        var VR:String = "вьетнамцы - русский"
+        
+        
+        if lang == "JA" {
+            VJ = "\(VJ) (*)"
+        }else if lang == "KO" {
+            VK = "\(VK) (*)"
+        }else if lang == "FR" {
+            VF = "\(VF) (*)"
+        }else if lang == "RU" {
+            VR = "\(VR) (*)"
+        }else {
+            VE = "\(VE) (*)"
+        }
+
+        
         var observerObject: NSObjectProtocol?
         let alertController = BPCompatibleAlertController(title: nil, message: "Language", alertStyle: BPCompatibleAlertControllerStyle.Alert)
         alertController.postActionHandlerCleanupFunction =  {
@@ -225,33 +222,38 @@ class MainViewController: BaseViewController{
             }
         }
         
-        let actionJa = BPCompatibleAlertAction.defaultActionWithTitle("JA", handler: { (action) in
+        let actionJa = BPCompatibleAlertAction.defaultActionWithTitle(VJ, handler: { (action) in
             self.lang = "JA"
             Utility.saveObj(Constant.KEY_LANGUAGE, entity: self.lang)
+            self.setFlagImage()
             Log.print(self.TAG, msg:"JA")
         })
         
-        let actionKo = BPCompatibleAlertAction.defaultActionWithTitle("KO", handler: { (action) in
+        let actionKo = BPCompatibleAlertAction.defaultActionWithTitle(VK, handler: { (action) in
             self.lang = "KO"
-             Utility.saveObj(Constant.KEY_LANGUAGE, entity: self.lang)
+            Utility.saveObj(Constant.KEY_LANGUAGE, entity: self.lang)
+            self.setFlagImage()
             Log.print(self.TAG, msg:"KO")
         })
         
-        let actionFr = BPCompatibleAlertAction.defaultActionWithTitle("FR", handler: { (action) in
+        let actionFr = BPCompatibleAlertAction.defaultActionWithTitle(VF, handler: { (action) in
             self.lang = "FR"
-             Utility.saveObj(Constant.KEY_LANGUAGE, entity: self.lang)
+            Utility.saveObj(Constant.KEY_LANGUAGE, entity: self.lang)
+            self.setFlagImage()
             Log.print(self.TAG, msg:"FR")
         })
         
-        let actionRu = BPCompatibleAlertAction.defaultActionWithTitle("RU", handler: { (action) in
+        let actionRu = BPCompatibleAlertAction.defaultActionWithTitle(VR, handler: { (action) in
             self.lang = "RU"
-             Utility.saveObj(Constant.KEY_LANGUAGE, entity: self.lang)
+            Utility.saveObj(Constant.KEY_LANGUAGE, entity: self.lang)
+            self.setFlagImage()
             Log.print(self.TAG, msg:"RU")
         })
        
-        let actionDefault = BPCompatibleAlertAction.defaultActionWithTitle("EN", handler: { (action) in
+        let actionDefault = BPCompatibleAlertAction.defaultActionWithTitle(VE, handler: { (action) in
             self.lang = "EN"
-             Utility.saveObj(Constant.KEY_LANGUAGE, entity: self.lang)
+            Utility.saveObj(Constant.KEY_LANGUAGE, entity: self.lang)
+            self.setFlagImage()
             Log.print(self.TAG, msg:"EN")
         })
 
@@ -272,6 +274,20 @@ class MainViewController: BaseViewController{
             // Completion handler
         }
 
+    }
+    
+    func setFlagImage(){
+        if self.lang == "JA" {
+            imgFlag.image = UIImage(named: "japan")
+        }else if self.lang == "KO" {
+            imgFlag.image = UIImage(named: "korea")
+        }else if self.lang == "FR" {
+            imgFlag.image = UIImage(named: "france")
+        }else if self.lang == "RU" {
+            imgFlag.image = UIImage(named: "russia")
+        }else{
+            imgFlag.image = UIImage(named: "english")
+        }
     }
 
   }

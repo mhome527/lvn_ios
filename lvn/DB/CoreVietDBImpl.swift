@@ -8,7 +8,7 @@
 
 import UIKit
 import CoreData
-import SwiftyJSON
+//import SwiftyJSON
 
 class CoreVietDBImpl {
     let TAG = "CoreDBImpl"
@@ -22,6 +22,15 @@ class CoreVietDBImpl {
     let KEY_O2 = "o2"
     let KEY_LEVEL = "level"
     let KEY_WORD = "default_word"
+    
+    //// REC
+    let KEY_GROUP_ID = "group_id"
+    let KEY_WORD_ID = "word_id"
+    let KEY_VN = "vn"
+    let KEY_EX = "ex"
+    let KEY_OT = "ot"
+    ////////////////////
+    
     var lang: String
 
     let contry: ContryName
@@ -43,13 +52,13 @@ class CoreVietDBImpl {
         
     }
     
-//    enum TableRecName: String {
-//        case EN = "TblRec_EN"
-//        case JA = "TblRec_JA"
-//        case KO = "TblRec_KO"
-//        case FR = "TblRec_FR"
-//        case RU = "TblRec_RU"
-//    }
+    enum TableRecName: String {
+        case EN = "TblRec_EN"
+        case JA = "TblRec_JA"
+        case KO = "TblRec_KO"
+        case FR = "TblRec_FR"
+        case RU = "TblRec_RU"
+    }
 
     enum ContryName : String {
         case EN = "EN"
@@ -223,7 +232,133 @@ class CoreVietDBImpl {
             Log.print(TAG, msg: error!.description)
         }
     }
+    ////////////////////////
+    
+    //////////// REC //////////////
+    func saveRecTable(json: JSON){
+        Log.print(TAG, msg: "saveRecTable listData ....")
+        let listData = json[KEY_VIET].arrayValue
+        Log.print(TAG, msg: "saveRecTable listData count: \(listData.count); lang:\(contry.rawValue)")
+        for entity in listData {
+            saveTblRecObj(entity)
+        }
+    }
+    
+    func getTableRecName(lang: String) -> String {
+        
+        switch contry {
+            case .JA: return TableRecName.JA.rawValue
+            case .KO: return TableRecName.KO.rawValue
+            case .FR: return TableRecName.FR.rawValue
+            case .RU: return TableRecName.RU.rawValue
+            default: return TableRecName.EN.rawValue
+        }
+    }
+    
+    func saveTblRecObj(json: JSON){
+        let group_id = json[KEY_GROUP_ID].int
+        let word_id = json[KEY_WORD_ID].int
+        let vn = json[KEY_VN].stringValue
+        let ex = json[KEY_EX].stringValue
+        let ot = json[KEY_OT].stringValue
+        
+        switch contry {
+            case .JA: saveTblREC_JA(group_id!, word_id: word_id!, vn: vn, ex: ex, ot:ot)
+            case .KO: saveTblREC_KO(group_id!, word_id: word_id!, vn: vn, ex: ex, ot:ot)
+            case .FR: saveTblREC_FR(group_id!, word_id: word_id!, vn: vn, ex: ex, ot:ot)
+            case .RU: saveTblREC_RU(group_id!, word_id: word_id!, vn: vn, ex: ex, ot:ot)
+            default:  saveTblREC_EN(group_id!, word_id: word_id!, vn: vn, ex: ex, ot:ot)
+        }
+    }
 
+    
+    func saveTblREC_EN(group_id: Int, word_id: Int, vn: String, ex: String, ot: String){
+        let entity = NSEntityDescription.insertNewObjectForEntityForName(TableRecName.EN.rawValue, inManagedObjectContext: moc) as! TblRec_EN
+        
+        entity.group_id = group_id
+        entity.word_id = word_id
+        entity.vn = vn
+        entity.ex = ex
+        entity.ot = ot
+        
+        var error : NSError?
+        moc.save(&error)
+        if error != nil {
+            Log.print(TAG, msg: error!.description)
+        }
+        
+    }
+    
+    func saveTblREC_JA(group_id: Int, word_id: Int, vn: String, ex: String, ot: String){
+        let entity = NSEntityDescription.insertNewObjectForEntityForName(TableRecName.JA.rawValue, inManagedObjectContext: moc) as! TblRec_JA
+        
+        entity.group_id = group_id
+        entity.word_id = word_id
+        entity.vn = vn
+        entity.ex = ex
+        entity.ot = ot
+        
+        var error : NSError?
+        moc.save(&error)
+        if error != nil {
+            Log.print(TAG, msg: error!.description)
+        }
+        
+    }
+    
+    func saveTblREC_KO(group_id: Int, word_id: Int, vn: String, ex: String, ot: String){
+        let entity = NSEntityDescription.insertNewObjectForEntityForName(TableRecName.KO.rawValue, inManagedObjectContext: moc) as! TblRec_KO
+        
+        entity.group_id = group_id
+        entity.word_id = word_id
+        entity.vn = vn
+        entity.ex = ex
+        entity.ot = ot
+        
+        var error : NSError?
+        moc.save(&error)
+        if error != nil {
+            Log.print(TAG, msg: error!.description)
+        }
+        
+    }
+    
+    func saveTblREC_FR(group_id: Int, word_id: Int, vn: String, ex: String, ot: String){
+        let entity = NSEntityDescription.insertNewObjectForEntityForName(TableRecName.FR.rawValue, inManagedObjectContext: moc) as! TblRec_FR
+        
+        entity.group_id = group_id
+        entity.word_id = word_id
+        entity.vn = vn
+        entity.ex = ex
+        entity.ot = ot
+        
+        var error : NSError?
+        moc.save(&error)
+        if error != nil {
+            Log.print(TAG, msg: error!.description)
+        }
+        
+    }
+    
+    func saveTblREC_RU(group_id: Int, word_id: Int, vn: String, ex: String, ot: String){
+        let entity = NSEntityDescription.insertNewObjectForEntityForName(TableRecName.RU.rawValue, inManagedObjectContext: moc) as! TblRec_RU
+        
+        entity.group_id = group_id
+        entity.word_id = word_id
+        entity.vn = vn
+        entity.ex = ex
+        entity.ot = ot
+        
+        var error : NSError?
+        moc.save(&error)
+        if error != nil {
+            Log.print(TAG, msg: error!.description)
+        }
+        
+    }
+    
+    
+    ////////////////// END REC /////////////////
     
     func replaceText(vi: String, o1: String) -> (viNew: String, o1New: String) {
         let start1 = "\u{1}"

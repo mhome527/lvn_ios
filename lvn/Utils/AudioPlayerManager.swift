@@ -14,7 +14,7 @@ class AudioPlayerManager: NSObject, AVAudioPlayerDelegate {
     let TAG = "AudioPlayerManager"
     
 //    var avPlayer1:AVAudioPlayer! 
-    var listNames:[String] = []
+//    var listNames:[String] = []
     var listPlayer:[AVAudioPlayer] = []
 //    var currPlayer:AVAudioPlayer!
     var isStop:Bool = false
@@ -47,26 +47,56 @@ class AudioPlayerManager: NSObject, AVAudioPlayerDelegate {
         ///
         
         var error: NSError?
-        self.listNames = listNames
+//        self.listNames = listNames
         
         stopSound()
         
         for name1 in listNames {
             var name:String = name1.stringByReplacingOccurrencesOfString(" ", withString: "")
+            
             if !name.isEmpty && name != "" {
-                let fileURL:NSURL = NSBundle.mainBundle().URLForResource("Sound/\(name.lowercaseString)", withExtension: "mp3")!
+                if let num = name.toInt() {
+                    let str = name as NSString
+                    let words = NumberText.convertNumberToChar(str.longLongValue)
+                    //setFileName(words.componentsSeparatedByString(" "))
+                    
+                    for name2 in words.componentsSeparatedByString(" ") {
+                        let word = name2.stringByReplacingOccurrencesOfString(" ", withString: "")
+                        if !word.isEmpty && word != "" {
+                            let fileURL:NSURL = NSBundle.mainBundle().URLForResource("Sound/\(word.lowercaseString)", withExtension: "mp3")!
+                            
+                            var avPlayer = AVAudioPlayer(contentsOfURL: fileURL, fileTypeHint: AVFileTypeMPEGLayer3, error: &error)
+                            listPlayer.append(avPlayer)
+                            if avPlayer == nil {
+                                if let e = error {
+                                    println(e.localizedDescription)
+                                }
+                            } else {
+                                avPlayer.delegate = self
+                                avPlayer.prepareToPlay()
+                                avPlayer.volume = 1.0
+                            }
+                        }
+                    }
+                    
+                    
+                    
+                }else{
+                    let word2 = name.lowercaseString.stringByReplacingOccurrencesOfString(" ", withString: "")
+                    let fileURL:NSURL = NSBundle.mainBundle().URLForResource("Sound/\(word2)", withExtension: "mp3")!
 //                let fileURL:NSURL = NSBundle.mainBundle().URLForResource("vn", withExtension: "mp3")!
 
-                var avPlayer = AVAudioPlayer(contentsOfURL: fileURL, fileTypeHint: AVFileTypeMPEGLayer3, error: &error)
-                listPlayer.append(avPlayer)
-                if avPlayer == nil {
-                    if let e = error {
-                        println(e.localizedDescription)
+                    var avPlayer = AVAudioPlayer(contentsOfURL: fileURL, fileTypeHint: AVFileTypeMPEGLayer3, error: &error)
+                    listPlayer.append(avPlayer)
+                    if avPlayer == nil {
+                        if let e = error {
+                            println(e.localizedDescription)
+                        }
+                    } else {
+                        avPlayer.delegate = self
+                        avPlayer.prepareToPlay()
+                        avPlayer.volume = 1.0
                     }
-                } else {
-                    avPlayer.delegate = self
-                    avPlayer.prepareToPlay()
-                    avPlayer.volume = 1.0
                 }
             }
 

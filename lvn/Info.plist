@@ -8,6 +8,8 @@
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
 	<string>lvn.vietnam.vn.$(PRODUCT_NAME:rfc1034identifier)</string>
+	<key>LSApplicationCategoryType</key>
+	<string></string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -28,6 +30,22 @@
 	<string>Main</string>
 	<key>UIMainStoryboardFile~ipad</key>
 	<string>Main_ipad</string>
+	<key>CFBundleIconFiles</key>
+	<array>
+		<string>icon29</string>
+		<string>icon40</string>
+		<string>icon50</string>
+		<string>icon57</string>
+		<string>icon58</string>
+		<string>icon72</string>
+		<string>icon76</string>
+		<string>icon80</string>
+		<string>icon100</string>
+		<string>icon114</string>
+		<string>icon120</string>
+		<string>icon144</string>
+		<string>icon152</string>
+	</array>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>
